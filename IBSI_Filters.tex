@@ -153,6 +153,9 @@
 \renewcommand{\thefootnote}{\textit{\alph{footnote}}}
 
 \usepackage{enumitem}
+
+% for troubleshooting boxes
+\usepackage{tcolorbox}
 % --------------------------------------
 
 
@@ -212,6 +215,13 @@ This work is licensed under the Creative Commons Attribution 4.0 International L
 
 Copyright information regarding the benchmark data sets may be found on GitHub\footnote{\texttt{\url{https://github.com/theibsi/data\_sets}}, as of June 2020.}.
 
+\subsection*{Change notes}
+
+Changes in version 4:
+\begin{itemize}
+    \item A list of participants was added.
+\end{itemize}
+
 \subsection*{Participants}
 \marginnote{\footnotesize v4: Added list of participants.}
 The following people contributed to this reference manual and the project as a whole.
@@ -245,6 +255,7 @@ Bhakti Vilas Baheti
 & Center for Biomedical image Computing and Analytics (CBICA), University of Pennsylvania, Philadelphia (PA), USA\\ 
 Spyridon Bakas
 & Center for Biomedical image Computing and Analytics (CBICA), University of Pennsylvania, Philadelphia (PA), USA; Department of Radiology, Perelman School of Medicine, University of Pennsylvania, Philadelphia (PA), USA; Department of Pathology and Laboratory Medicine, Perelman School of Medicine, University of Pennsylvania, Philadelphia (PA), USA\\
+Andrea Bettinelli & Veneto Institute of Oncology - IOV IRCSS, Padova, Italy\\
 Ronald Boellaard
 & Department of Nuclear Medicine and Molecular Imaging, University of Groningen, University Medical Center Groningen (UMCG), Groningen, The Netherlands; Radiology and Nuclear Medicine, VU University Medical Centre (VUMC), Amsterdam, The Netherlands\\ 
 Marta Bogowicz
@@ -275,6 +286,7 @@ Jacopo Lenkowicz
 & Fondazione Policlinico Universitario "A. Gemelli" IRCCS, Rome, Italy\\ 
 Steffen L{\"o}ck
 & OncoRay – National Center for Radiation Research in Oncology, Faculty of Medicine and University Hospital Carl Gustav Carus, Technische Universität Dresden, Helmholtz-Zentrum Dresden - Rossendorf, Dresden, Germany; German Cancer Consortium (DKTK), Partner Site Dresden, and German Cancer Research Center (DKFZ), Heidelberg, Germany; Department of Radiotherapy and Radiation Oncology, Faculty of Medicine and University Hospital Carl Gustav Carus, Technische Universität Dresden, Dresden, Germany\\ 
+Francesca Marturano & Veneto Institute of Oncology - IOV IRCSS, Padova, Italy\\
 Olivier Morin
 & Department of Radiation Oncology, University of California, San Francisco (CA), USA\\ 
 Henning Müller
@@ -331,20 +343,30 @@ In particular, the interoperability of radiomics software is hindered by the lac
 As a result, considerable variations in biomarker values have been reported, even if they are computed from the same image~\cite{Hatt2017-zp,Bogowicz2017-kh,Foy2018-mx}.
 To improve interoperability, the Image Biomarker Standardisation Initiative (IBSI), an independent international collaboration, proposes (i) reference manuals documenting mathematical definitions of image analysis processes and (ii) reference values for image biomarkers based on phantoms with controlled image input and well-defined configurations of the image processing parameters.
 
-This reference manual draws on and extends the first IBSI reference manual~\cite{ZLV2017} by defining and standardising image biomarkers based on image filters, \textit{e.g.}, wavelets, Laws kernels and Laplacians of Gaussian (LoG).
+This reference manual draws on and extends the first IBSI reference manual~\cite{ZLV2017} by defining and standardising image biomarkers based on so-called convolutional filters, \textit{e.g.}, wavelets, Laws kernels and Laplacians of Gaussian (LoG).
 Here, we specifically address several so-called convolutional filters.
 Filters such as entropy, median, max and morphological filtering are not covered.
 
 This document is structured as follows.
-The first section of this chapter introduces notations and conventions (Section~\ref{sec:notations}).
-The second section provides a brief overview of the image filtering process for image biomarker extraction (Section~\ref{sec:overview}).
+The first section of this chapter describes the place of convolutional filtering in the overall radiomics workflow.
+The second section of this chapter introduces notations and conventions (Section~\ref{sec:notations}).
+The final section provides a brief overview of the image filtering process for image biomarker extraction (Section~\ref{sec:overview}).
 Chapter~\ref{sec:convolution} details all aspects of convolutional operations, the fundamental process for linear image filtering.
 Chapter~\ref{sec:linearFilterProperties} lists important properties of convolutional filters.
 %Aggregation operations are a fundamental step to transform filter responses (called response maps) into scalar-valued quantitative image biomarkers and is described in Chapter~\ref{sec:aggregation}.
 Most commonly used convolutional filtering methods in radiomics are identified and formally defined in Chapter~\ref{sec:filtersDescription}.
 Chapter~\ref{sec:qualitativeComparison} qualitatively compares these filtering methods in terms of the properties introduced in Chapter~\ref{sec:linearFilterProperties}.
-Practical considerations, recommendations and data processing workflows of filtering for radiomics are provided in Chapter~\ref{sec:practicalConsiderations}.
 Finally, benchmarking of software implementations of the filters defined in Chapter~\ref{sec:filtersDescription} is proposed in Chapter~\ref{sec:benchmarking}, where phantoms are defined and the benchmarking procedure, including response map comparisons, is detailed. 
+
+\section{Convolutional Filtering within the Radiomics Workflow}\label{sec:overallWorkflow}
+Convolutional filtering is part of image processing for radiomics. Within the image processing workflow, filtering is conducted after image interpolation, see Figure \ref{fig:imageProcessing}. Filtering an image creates a response map that for the filters discussed in this document has the same dimensions as the input image. Radiomic features, such as those detailed in the first IBSI reference manual ~\cite{ZLV2017}, may then be computed from the response map as well.
+
+\begin{figure}
+\centering
+\includegraphics[]{Image_processing_with_filtering.pdf}
+\caption{Overall image processing scheme with image filtering (adapted from Zwanenburg \textit{et al.}~\cite{ZLV2017}). After loading a medical image, the image data are optionally converted (\textit{e.g.} SUV normalisation). The image may then undergo further post-processing (\textit{e.g.} noise reduction, bias field correction). Subsequently, a segmentation mask is created or loaded to identify the ROI in the image. The image is subsequently interpolated to ensure that image voxels are isometric, after which image filters may be applied to the image. The ROI mask is interpolated to the same grid as the image, prior to forming intensity and morphological ROI masks. The intensity (but not morphological) mask is optionally re-segmented based on image intensities of the unfiltered image. Subsequently, features are computed from the filtered image and the applicable ROI masks. The intensities in ROI intensity mask may undergo discretisation prior to computing features from \textit{e.g.} texture families. IH: intensity histogram; IVH: intensity-volume histogram; GLCM: grey level cooccurrence matrix; GLRLM: grey level run length matrix; GLSZM: grey level size zone matrix; NGTDM: neighbourhood grey tone difference matrix; NGLDM: Neighbouring grey level dependence matrix; GLDZM: grey level distance zone matrix; *A different discretisation scheme is usually used for computing IVH features.}
+\label{fig:imageProcessing}
+\end{figure}
 
 \section{Notations and Conventions}\label{sec:notations}
 %
@@ -359,7 +381,7 @@ f(\boldsymbol{x})\overset{\mathcal{F}}{\longleftrightarrow}\hat{f}(\boldsymbol{\
 where $\boldsymbol{\omega}=(\omega_1,\dots,\omega_D) \in \mathbb{R}^D$ is the frequency coordinate vector and $\langle\cdot,\cdot\rangle$ denotes the scalar product.
 
 A discrete image is modeled as a $D$-dimensional function of the variable $\boldsymbol{k} = (k_1, \dots , k_D) \in \mathbb{Z}^D$, taking values $f[\boldsymbol{k}] \in \mathbb{R}$. 
-The discrete Fourier transform\footnote{In this discrete setting, the normalised Nyquist frequency is denoted by $\pi$.} of a summable $f[\boldsymbol{k}]$ is noted $\hat{f}[\boldsymbol{\nu}]\in\mathbb{C}$, with $\boldsymbol{\nu}=(\nu_1,\dots,\nu_D) \in \mathbb{Z}^D$ the discrete frequency coordinate vector, and is defined as
+The discrete Fourier transform\footnote{In this discrete setting, the normalised Nyquist frequency is denoted by $\nu_B=\pi$.} of a summable $f[\boldsymbol{k}]$ is noted $\hat{f}[\boldsymbol{\nu}]\in\mathbb{C}$, with $\boldsymbol{\nu}=(\nu_1,\dots,\nu_D) \in \mathbb{Z}^D$ the discrete frequency coordinate vector, and is defined as
 \begin{equation}\label{eq:discreteFourierTransform}
 f[\boldsymbol{k}]\overset{\mathcal{F}}{\longleftrightarrow}\hat{f}[\boldsymbol{\nu}]=
 \sum_{\boldsymbol{k}\in\mathbb{Z}^D} f[\boldsymbol{k}] \,\, e^{-\mathrm{j}\langle\boldsymbol{\nu},\boldsymbol{k}\rangle}.
@@ -377,7 +399,7 @@ The image frame of reference determines how the stored image grid is oriented an
 \end{itemize}
 
 %
-\section{Overview}\label{sec:overview}
+\section{Steps in convolutional filtering}\label{sec:overview}
 %
 This section provides an overview of the filter-based image biomarker extraction process, which is shown in Fig.~\ref{fig:overview}.
 It consists of the following steps:
@@ -398,6 +420,7 @@ $h[\boldsymbol{k}]$ is not a directly usable quantitative image feature and need
 The latter will transform the response map $h$ into a scalar measurement $\eta$, which can be further used in a statistical or machine learning model.
 $h$ can be seen as a new image derived from $f$, on which any feature defined in the first IBSI reference manual can be computed~\cite{ZLV2017}.
 However, the interpretability of the latter would be difficult (unless the filter is simply used to \textit{e.g.} remove high frequency noise), and the large number of possible combinations of filters and features increases the risk of fortuitous correlations between features and clinical endpoints.
+%%% RECOMMENDATION NOT TO USE 2ND ORDER on top of response maps
 In practice, the most obvious aggregation functions are the first four statistical moments of the voxel value distribution in $\boldsymbol{M}$, the first one being the average:
 %
 \begin{equation}\label{eq:aggregationAverage}
@@ -410,6 +433,7 @@ where $|\boldsymbol{M}|$ denotes the number of voxels in the ROI.
 %
 It is worth noting that the influence of the aggregation function is as important as the filter and it should be considered carefully~\cite{Dep2017}.
 For the particular case of average-based aggregation in Eq.~\eqref{eq:aggregationAverage}, one must be careful when using zero-mean filters (\textit{e.g.} LoG, some Laws kernels, Gabor, wavelets, Riesz) leading to $\eta\approx 0$. In this case, taking the energy $h^2[\boldsymbol{k}]$ or the absolute value $|h[\boldsymbol{k}]|$ of the response map before the aggregation is recommended.
+%%% RECOMMENDATION for zero mean filters
 %
 \begin{figure}
 \centering
@@ -661,6 +685,7 @@ This method is also called \textit{symmetric}.
 \subsection{Considerations for Radiomics}
 %
 In many radiomics applications, the choice of boundary extension method is generally not important, as long as the ROI is sufficiently far from the image boundary, \textit{i.e.} at least by more than half of the convolution filter width/height/depth. In the uncommon case where the ROI is close to the border, the \textit{mirror} method may generally be recommended because it avoids sharp transitions and artificial patterns.
+%%% RECOMMENDATION to use the mirror boundary condition
 
 \chapter{Filtering Properties}\label{sec:linearFilterProperties}
 %
@@ -780,6 +805,49 @@ g[\boldsymbol{k}]=
 \end{cases}
 \end{equation}
 %
+
+\vspace{2mm}
+\begin{tcolorbox}[width=150mm, halign=left, colframe=black, colback=white, boxsep=0mm,arc=3mm]
+\textbf{Benchmark Troubleshooting}
+\begin{itemize}
+\itemsep0em 
+\item Ensure support $M$ is voxel spacing. 
+\item Check padding algorithm is correctly applied (particularly mirror). An example of an outlier submission due to padding is shown in Fig.\ \ref{fig:1a1_mean_example}.
+\end{itemize}
+\end{tcolorbox}
+
+
+\begin{figure}[!t] 
+\centering
+   \begin{minipage}[b]{0.45\textwidth} 
+     \centering
+     \includegraphics[trim = 0 0 0 0, clip,scale=0.40]{example_1a1_outlier.png}
+     \subcaption{\footnotesize Outlier submission.}
+     %\hspace{50pt}
+   \end{minipage}
+   \begin{minipage}[b]{0.45\textwidth}
+     \centering
+     \includegraphics[trim = 0 0 0 0, clip, scale=0.40]{example_1a1_crm.png}
+     \subcaption{\footnotesize Valid CRM.}
+     %\hspace{50pt}
+   \end{minipage}
+      \begin{minipage}[b]{0.45\textwidth}
+     \centering
+     \includegraphics[trim = 0 0 0 0, clip, scale=0.40]{example_1a1_diff.png}
+     \subcaption{\footnotesize Absolute difference.}
+     %\hspace{50pt}
+   \end{minipage}
+   \begin{minipage}[b]{0.45\textwidth}
+     \centering
+     \includegraphics[trim = 0 0 0 0, clip, scale=0.40]{example_1a1_GM.png}
+     \subcaption{\footnotesize Voxel-wise \textit{passing map}.}
+   \end{minipage} 
+   \caption{Example of outlier discrepancy for mean filter test 1.a.1 (Table \ref{tab:benchmark_filter_settings}) caused by padding differences. The central 2D slice of the 3D volumes are visualised for: \textbf{(a)} an outlier submission, \textbf{(b)} the valid \textit{consensus response map} (CRM) found, \textbf{(c)} the absolute difference between the outlier and consensus,  \textbf{(d)} and voxel-wise passing map of this difference. }
+   \label{fig:1a1_mean_example}
+\end{figure}
+
+
+
 \section{Laplacian of Gaussian}\label{sec:LaplacianOfGaussian}
 %
 The Laplacian of Gaussian (LoG) is a band-pass and circularly/spherically symmetric convolutional operator.
@@ -794,7 +862,7 @@ g_{\sigma}[\boldsymbol{k}]=
 e^{-\frac{||\boldsymbol{k}||^2}{2\sigma^2}},
 \end{equation}
 %
-where the standard deviation of the Gaussian $\sigma$ controls the scale of the operator. Note that \(\sigma\) is implied to be in voxel units.
+where the standard deviation of the Gaussian $\sigma$ controls the scale of the operator. Note that \(\sigma\) is implied to be in voxel units, i.e. $\sigma = \sigma^* / s$, with $s$ the voxel spacing.
 
 LoG filtering cannot be implemented with separable convolution and requires a full $D$-dimensional convolution.
 However, it can be approximated using a Difference of two Gaussians (DoG) when the ratio between their respective standard deviations $\sigma_1$ and $\sigma_2$ is $\sigma_1 = \frac{\sigma_2}{\sqrt{2}}$.
@@ -806,6 +874,7 @@ The spatial support of the LoG is \((-\infty, \infty\)) (\emph{i.e.} not compact
 Because this would require a filter with infinite spatial support, the LoG filter is cropped in practice, usually based on the $\sigma$ parameter. The 1$D$ filter size is then
 $$M=1 + 2\lfloor d\, \sigma + 0.5\rfloor,$$
 with \(d\) the truncation parameter, \(\sigma\)  in voxel units (\emph{e.g.}, \(\sigma=2.5\) voxels when it parameterised as \(\sigma^* = 5\) mm with voxel spacing of \(2\) mm). As a consequence, the size of a (1$D$) LoG filter is at least \(M=1\) and will have an odd, integer value. \(d=4\) is commonly used for truncation.
+%%% RECOMMENDATION ???
 
 The profile of a 2$D$ LoG is illustrated in Fig.~\ref{fig:LoG}.
 %
@@ -818,6 +887,16 @@ The profile of a 2$D$ LoG is illustrated in Fig.~\ref{fig:LoG}.
 %
 The LoG filter can be used to enhance image blobs and ridges at a specific scale, controlled by $\sigma^*$.
 This is illustrated in Fig.~\ref{fig:LoG_examples}.
+
+\vspace{2mm}
+\begin{tcolorbox}[width=150mm, halign=left, colframe=black, colback=white, boxsep=0mm,arc=3mm]
+\textbf{Benchmark Troubleshooting}
+\begin{itemize}
+\item The scale $\sigma^*$ for the filter tests (Table \ref{tab:benchmark_filter_settings}) are defined in physical distance (note voxel dimensions for digital phantom are stored in NifTI header as $2 \times 2 \times 2$ mm). Many \textit{off the shelf} functions assume an input $\sigma$ is voxel spacing, so a conversion is required (e.g. \textit{fspecial3} in Matlab).
+\item To test implementation of Eq.\ \ref{eq:LoG}, check the LoG kernel sums to approximately 0. 
+%\item Discrepancy only at the boarder is likely due to incorrect padding.
+\end{itemize}
+\end{tcolorbox}
 
 %
 \begin{figure}
@@ -889,9 +968,54 @@ We suggest using the same padding (see Section~\ref{sec:constantValuePadding}) u
 Laws filtering is not rotation-invariant.
 However, since the kernels are separable, rotational invariance can be efficiently approximated using permutations and unidimensional filter flipping, followed by orientation pooling with \textit{e.g.} the max (see Section~\ref{sec:combiningDSandRotInv} and Appendix~\ref{app:separableConvRightAngleEquivariant}).
 In this case, we recommend computing the texture energy image after orientation pooling.
-
+%%% RECOMMENDATION to compute the texture energy image after orientation pooling
 
 An example of image filtering with the $g_{L5S5}$ kernel is shown in Fig.~\ref{fig:LawsExample}.
+
+\begin{figure}[!t] 
+\centering
+   \begin{minipage}[b]{0.45\textwidth} 
+     \centering
+     \includegraphics[trim = 0 0 0 0, clip,scale=0.40]{example_3a1_outlier.png}
+     \subcaption{\footnotesize Outlier submission.}
+     %\hspace{50pt}
+   \end{minipage}
+   \begin{minipage}[b]{0.45\textwidth}
+     \centering
+     \includegraphics[trim = 0 0 0 0, clip, scale=0.40]{example_3a1_crm.png}
+     \subcaption{\footnotesize Valid CRM.}
+     %\hspace{50pt}
+   \end{minipage}
+      \begin{minipage}[b]{0.45\textwidth}
+     \centering
+     \includegraphics[trim = 0 0 0 0, clip, scale=0.40]{example_3a1_diff.png}
+     \subcaption{\footnotesize Absolute difference.}
+     %\hspace{50pt}
+   \end{minipage}
+   \begin{minipage}[b]{0.45\textwidth}
+     \centering
+     \includegraphics[trim = 0 0 0 0, clip, scale=0.40]{example_3a1_GM.png}
+     \subcaption{\footnotesize Voxel-wise \textit{passing map}.}
+   \end{minipage} 
+   \caption{Example of outlier discrepancy for Laws filter test 3.a.1. (Table \ref{tab:benchmark_filter_settings}) The central 2D slice of the 3D volumes are visualised for: \textbf{(a)} an outlier submission, \textbf{(b)} the valid \textit{consensus response map} (CRM) found, \textbf{(c)} the absolute difference between the outlier and consensus,  \textbf{(d)} and voxel-wise passing map of this difference. The two response maps (\textbf{(a)} and \textbf{(b)}) are identical apart from orientation. }
+   \label{fig:3a1_Laws_example}
+\end{figure}
+
+
+\vspace{2mm}
+\begin{tcolorbox}[width=150mm, halign=left, colframe=black, colback=white, boxsep=0mm,arc=3mm]
+\textbf{Benchmark Troubleshooting}
+\begin{itemize}
+\item Filter orientation and convolution direction is a key cause of discrepancy. %(for filter tests that are not rotationally invariant). 
+An example of an outlier response map for filter test 3.a.1\ (Table \ref{tab:benchmark_filter_settings}) that appears to have a different orientation is shown in Fig.\ \ref{fig:3a1_Laws_example}.
+\item Check filter kernels are applied in the direction consistent with Section \ref{sec:imageDirections}. Use orientation phantom to check how software orientates a loaded image. 
+\item Ensure that the header information correctly orientates the saved response map.
+\item Only one Energy Image should be calculated. This is performed after orientation pooling and on absolute intensity values.
+\end{itemize}
+\end{tcolorbox}
+
+
+
 
 %
 \begin{figure}
@@ -987,6 +1111,7 @@ F_b = \mathrm{log}_2 \left( \frac{\frac{\sigma}{\lambda}\pi+\sqrt{\frac{\ln 2}{2
 %
 Gabor filters can then be constructed at multiple scales and orientations to explore the spectrum of patterns in an image. 
 Bianconi \textit{et al.}~\cite{Bianconi2007} proposed to extract response maps at multiple orientations $\{\theta_1,\dots,\theta_P\}$ and frequencies $\{F_1,\dots,F_Q\}$ along with $\gamma$ are defined to cover all directions and scales up to the maximum frequency $F_Q=\frac{1}{\lambda_Q}$.
+%%% RECOMMENDATION ???
 It is worth noting that when using a suitable sequence of scales, Gabor filters can also satisfy the wavelet admissibility condition (\textit{i.e.} referred to as ``Gabor wavelets") and can, in this particular case, fully cover the Fourier domain.
 Finally, since $g_{\sigma,\lambda,\gamma,\theta}[\boldsymbol{k}]$ is complex, the modulus of the associated response map can be used before aggregation and feature calculation as $\lvert h[\boldsymbol{k}] \rvert = \lvert (g_{\sigma,\lambda,\gamma,\theta} \ast f) [\boldsymbol{k}]\rvert$.
 An example of filtering with Gabor is depicted in Fig.~\ref{fig:Gabor_example}.
@@ -1019,6 +1144,7 @@ Collagen junctions oriented at $\theta=-\frac{\pi}{4}$ (top) and $\theta=\frac{\
 \end{figure}
 %
 
+\marginnote{\footnotesize v4: Added description of spatial support.}
 As with Laplacian-of-Gaussian filters the spatial support of Gabor filters is \((-\infty, \infty\)) (\emph{i.e.} not compact). 
 Because this would require a filter with infinite spatial support, the Gabor filter is cropped in practice, based on the $\sigma$ and $\gamma$ parameters. The 1$D$ filter size is then:
 %
@@ -1075,6 +1201,7 @@ While others exist, a common upsampling approach is to use the \emph{\`{a} trous
 %
 \marginnote{\footnotesize v4: Added clarification on \emph{\`{a} trous} algorithm.}
 The \emph{\`{a} trous} algorithm involves inserting zeros, or holes, into the filter kernel. For example, the high-pass kernel of the Haar wavelet is \(\left[ -1 / \sqrt{2}, 1 / \sqrt{2}\right]\). The first level decomposition of this high-pass kernel is \(\left[ -1 / \sqrt{2}, 0, 1 / \sqrt{2}\right]\), or alternatively \(\left[ -1 / \sqrt{2}, 0, 1 / \sqrt{2}, 0\right]\). The second level decomposition of the same kernel is formed by inserting zeros between the values of the first level kernel, forming \(\left[ -1 / \sqrt{2}, 0, 0, 0, 1 / \sqrt{2}\right]\), or alternatively \(\left[ -1 / \sqrt{2}, 0, 0, 0, 1 / \sqrt{2}, 0, 0, 0\right]\). Both alternatives are valid, but result in different response maps. Popular standard implementations in \texttt{MATLAB} and \texttt{pywavelets} use the second alternative. We therefore recommend using the second alternative for reproducibility.
+%%% RECOMMENDATION to use pywavelets
 
 The response maps $h^j[\boldsymbol{k}]$ produced through undecimated transform have the same dimensionality as the input image $f$ and are simply obtained via the convolution of $f[\boldsymbol{k}]$ with the filters $g_H^j$ and $g_L^j$ along each image direction.
 In 2$D$, this yields four response maps for every iteration: $h_{LL}^j$, $h_{LH}^j$, $h_{HL}^j$ and $h_{HH}^j$.
@@ -1147,6 +1274,7 @@ There exists a large number of other separable wavelet/scaling function pairs (\
 %
 \subsection{Non-separable Wavelets}\label{sec:nonseparableWavelets}
 %
+\marginnote{\footnotesize v4: Extended description of non-separable wavelets.}
 As motivated in  Section~\ref{sec:geomInvariances}, filters (and more generally texture operators) should be invariant or equivariant to local rotations in most cases. 
 However, with the exception of the Gaussian filter, all separable filters (including separable wavelets) are not invariant/equivariant to rotations.
 Therefore, it is interesting to consider non-separable wavelets to achieve isotropic image analysis.
@@ -1155,11 +1283,31 @@ As a consequence, these functions are circularly symmetric and can be further co
 Similarly to separable wavelets, they can be implemented using either a decimated or undecimated transform.
 
 Non-separable wavelets are easily implemented directly in the Fourier domain using their unidimensional radial profile.
-The radial coordinate is obtained as $||\boldsymbol{\nu}||=\sqrt{\nu_1^2+\nu_2^2+\dots+\nu_D^2}$.
-The support of the filter in the Fourier domain is the same as the considered (square/cubic) $N\times\cdots\times N$ image $f$ to allow the efficient computation of the convolution as a simple Hadamard product via Eq.~\eqref{eq:convolutionFFT}.
-Each coordinate $\boldsymbol{\nu}$ is contained in $[-\frac{N}{2},\frac{N}{2}]$ and the null frequency $\boldsymbol{\nu}=\boldsymbol{0}$ lies at the center of the image.
-The maximum coordinate value $\frac{N}{2}$ is denoted as $\nu_{B}$ and called the normalized Nyquist frequency.
-When the input image is not a cubic array, zero padding can be used in the spatial domain and before the FFT\footnote{Zero padding in the spatial domain corresponds to a sinc interpolation in the Fourier domain.} to make it cubic and to ensure that the corresponding wavelets filters are circularly symmetric.
+% The radial coordinate is obtained as $||\boldsymbol{\nu}||=\sqrt{\nu_1^2+\nu_2^2+\dots+\nu_D^2}$.
+% The support of the filter in the Fourier domain is the same as the considered (square/cubic) $N\times\cdots\times N$ image $f$ to allow the efficient computation of the convolution as a simple Hadamard product via Eq.~\eqref{eq:convolutionFFT}.
+% Each coordinate $\boldsymbol{\nu}$ is contained in $[-\frac{N}{2},\frac{N}{2}]$ and the null frequency $\boldsymbol{\nu}=\boldsymbol{0}$ lies at the center of the image.
+% The maximum coordinate value $\frac{N}{2}$ is denoted as $\nu_{B}$ and called the normalized Nyquist frequency, where $\nu_{B}=\pi$ radians/sample.
+The support of the filter in the Fourier domain is the same as the considered $N_1\times\cdots\times N_D$ image $f$ to allow the efficient computation of the convolution as a simple Hadamard product via Eq.~\eqref{eq:convolutionFFT}.
+Along dimension $i$, each coordinate $\boldsymbol{\nu_i}$ is contained in $[-\frac{N_i}{2},\frac{N_i}{2}]$ which is centered around the null frequency $\boldsymbol{\nu}=\boldsymbol{0}$.
+The maximum coordinate value $\frac{N_i}{2}$ is denoted as $\nu_{B}$ and called the normalized Nyquist frequency, where $\nu_{B}=\pi$ radians/sample.
+The unidimensional radial coordinate is then obtained as $||\boldsymbol{\nu}||=\sqrt{\nu_1^2+\nu_2^2+\dots+\nu_D^2}$.
+
+
+% In practice, we recommend defining a coordinate grid in the Fourier domain, where each dimension $\nu_i$ is sampled in the interval $[-\pi,\pi-\frac{2\pi}{N}]$ with a step of $\frac{2\pi}{N}$.
+In practice, we recommend defining a coordinate grid in the Fourier domain, where each dimension $\nu_i$ is sampled in the interval $[-\pi,\pi]$ with a step of $\frac{2\pi}{N_i-1}$.
+% In physical dimensions, each dimension $\nu_i^*$ is sampled in the interval $[-\frac{1}{s},\frac{1}{s}-\frac{2}{N\cdot s}]$ with a step of $\frac{2}{N\cdot s}$.
+Coordinate grids in voxel dimensions are illustrated in Fig.~\ref{fig:coordinateGridsFourier} for $N=8$.
+%%% RECOMMENDATION on how to define coordinate grids in Fourier for implementing nonseparable wavelets
+% When the input image is not a cubic array, zero padding can be used in the spatial domain and before the FFT\footnote{Zero padding in the spatial domain corresponds to a sinc interpolation in the Fourier domain.} to make it cubic and to ensure that the corresponding wavelets filters are circularly symmetric.
+%%% RECOMMENDATION to fix a cubic size across the entire dataset
+%
+\begin{figure}
+\centering
+\includegraphics[trim = 0 0 0 0, clip, width=.8\linewidth]{coordinateGridsFourier.pdf}\\
+\caption{Coordinate grids in voxel dimensions for for $N=8$.}
+  \label{fig:coordinateGridsFourier}
+\end{figure}
+%
 
 Whereas wavelet functions are usually defined as a cascade of high- and low-pass filters, here we focus on the band-pass filters corresponding to the consecutive subbands (i.e. response maps) that would results from combined high- and low- pass filtering (see introductory paragraph of Section~\ref{sec:wavelets}). In other words, these response maps can be directly obtained using a corresponding band-pass filter $h_B[\boldsymbol{k}]$, without the need of re-convolving with previous iterations of the wavelet transform. The resulting response maps are referred to as ``B maps''.
 Moreover, because images are defined over square (2$D$) or cubic (3$D$) arrays, the first high-pass wavelet filter would be always anisotropic, which is undesirable for isotropic image analysis.
@@ -1185,9 +1333,21 @@ Eq.~\eqref{eq:shannonWavelet} corresponds to the sinc wavelet in the spatial dom
 \end{equation}
 %
 
-An easy way to implement several consecutive iterations of such a non-separable wavelet transform is to start from the initial definition of the band-pass filter (the one with highest frequency band, e.g. Eq.~\eqref{eq:simoncelliWavelet}), and constructing the filter with half $\nu_B$ at every consecutive step. The response map can then be computed by taking the Hadamard product of the bandpass filter and the image in Fourier domain, and then performing an inverse Fourier transform.
+An easy way to implement several consecutive iterations of such a non-separable wavelet transform is to start from the initial definition of the band-pass filter (the one with highest frequency band, \emph{e.g.} Eq.~\eqref{eq:simoncelliWavelet}), and constructing the filter with half $\nu_B$ at every consecutive step. Concretely, the bandpass filter at a given scale level $j$ is obtained by replacing $\nu_B$ by $\frac{\nu_B}{2^j}$ in~\eqref{eq:shannonWavelet} or~\eqref{eq:simoncelliWavelet}).
+%%% RECOMMENDATION to compute B maps at any level of the transform
+The response map can then be computed by taking the Hadamard product of the bandpass filter and the image in Fourier domain, and then performing an inverse Fourier transform.
+This process is illustrated in Fig.~\ref{fig:hadamardConv}.
+%
+\begin{figure}
+\centering
+\includegraphics[trim = 0 0 0 0, clip, width=1\linewidth]{hadamardConv.pdf}\\
+\caption{Convolution in the Fourier domain using a Hadamard product. Complex modulus of the Fourier images are shown only for display purposes: the Hadamard product must be done with complex values.}
+  \label{fig:hadamardConv}
+\end{figure}
+%
 
-As described above, the support of the wavelet filter must be square/cubic as well as equivalent to the image to perform the isotropic convolution operation in the Fourier domain via a Hadamard product. When a collection of images is used for instance in the context of batch feature extraction over a cohort of patients, we recommend to fix image size to a square/cubic bounding box that can contain all ROIs in the dataset , after image isotropic image resampling (see Chapter~\ref{sec:practicalConsiderations}). This will ensure that wavelet scales are comparable accross patients as well as truly isotropic and rotation invariant image analysis.
+As described above, the support of the wavelet filter must be square/cubic as well as equivalent to the image to perform the isotropic convolution operation in the Fourier domain via a Hadamard product. When a collection of images is used for instance in the context of batch feature extraction over a cohort of patients, we recommend to fix image size $N$ to a square/cubic bounding box that can contain all ROIs in the dataset, after image isotropic image resampling. This will ensure that wavelet scales are comparable across patients as well as truly isotropic and rotation invariant image analysis.
+In this case, we recall that the normalized Nyquist frequency $\nu_B$ is related to image size as $N=2\cdot\nu_B$.
 
 The response maps resulting from the undecimated non-separable wavelet decomposition is illustrated in Fig.~\ref{fig:nonseparableWT} for the 2$D$ case.
 %
@@ -1205,22 +1365,83 @@ The wavelet is shown in the spatial (left) and in the Fourier (right, complex mo
   \label{fig:simoncelli}
 \end{figure}
 %
+
+
+
+% \subsubsection*{\textbf{Alternative Text}}
+
+% As motivated in  Section~\ref{sec:geomInvariances}, filters (and more generally texture operators) should be invariant or equivariant to local rotations in most cases. 
+% However, with the exception of the Gaussian filter, all separable filters (including separable wavelets) are not invariant/equivariant to rotations.
+% Therefore, it is interesting to consider non-separable wavelets to achieve isotropic image analysis.
+
+% Non-separable wavelets are easily implemented directly in the Fourier domain using their unidimensional radial profile.
+% Let $M \times \cdots \times M$ be the $D$-dimensional spatial support of the non-separable wavelet kernel.
+% Then, $\nu_B=\frac{M}{2}$ is the maximum filter frequency. Radial coordinates of the filter are obtained as $||\boldsymbol{\nu}||=\sqrt{\nu_1^2+\nu_2^2+\dots+\nu_D^2}$, with each coordinate $\nu$ contained in $[-\frac{M}{2}, \frac{M}{2}] = [-\nu_B, \nu_B]$.
+% The null frequency $\boldsymbol{\nu}=\boldsymbol{0}$ lies in the center of the wavelet kernel (in the Fourier domain), and may be absent for even $M$.
+
+% The simplest non-separable and circularly symmetric wavelet is the Shannon wavelet~\cite{UCV2011} characterised by the following band-pass function in the wavelet domain
+% %
+% \begin{equation}\label{eq:shannonWavelet}
+% \hat{g}_{\text{sha}}[\boldsymbol{\nu}]=
+% \begin{cases}
+% 1\quad\text{if}\quad\frac{\nu_B}{2}< ||\boldsymbol{\nu}|| \leq \nu_B,\\
+% 0\quad\text{otherwise}.
+% \end{cases}
+% \end{equation}
+% %
+% Eq.~\eqref{eq:shannonWavelet} corresponds to the sinc wavelet in the spatial domain, which has the disadvantage of having large spatial supports. Therefore, an interesting alternative is the smoother and more compactly supported (in space) Simoncelli wavelet~\cite{PoS2000}. Its band-pass function is defined as
+% %
+% 2e\begin{equation}\label{eq:simoncelliWavelet}
+% \hat{g}_{\text{sim}}[\boldsymbol{\nu}]=
+% \begin{cases}
+% \cos\left(\frac{\pi}{2}\log_2\left(\frac{2||\boldsymbol{\nu}||}{\nu_B}\right)\right)\quad\text{if}\quad\frac{\nu_B}{4}\leq ||\boldsymbol{\nu}|| \leq \nu_B,\\
+% 0\quad\text{otherwise}.
+% \end{cases}
+% \end{equation}
+
+% Principally, filter convolution in the Fourier domain allows for efficient computation through a simple Hadamard product with the Fourier transformation of the image via Eq.~\eqref{eq:convolutionFFT}. However, in practice, the image dimensions $N_1 \times \cdots \times N_D$ may not be isotropic and be equal to size $M$. The first step is to ensure that the image has an isotropic dimension $N$, i.e. is square or cubic. This can be achieved through padding in the spatial domain. What follows depends on $N$ and $M$:
+% \begin{itemize}
+%     \item If $N=M$: Compute the Fourier transform of the image and compute the Hadamard product with the wavelet kernel.
+%     \item If $N > M$: \begin{itemize}
+%         \item If $N$ and $M$ are not both even or odd: pad the image in the spatial domain before the Fourier transform to make sure $N$ and $M$ are both even or both odd. Then proceed with the next step.
+%         \item If $N$ and $M$ are both even or both odd: zero-pad the filter in the Fourier domain to size $N$. Note that null frequency $\boldsymbol{\nu}=\boldsymbol{0}$ should still lie in the center. Compute the Fourier transform of the image, and compute the Hadamard product with the wavelet kernel.
+%     \end{itemize}
+%     \item If $N < M$: Pad the image in the spatial domain to make $N$ and $M$ equal. Compute the Fourier transform of the image, and compute the Hadamard product with the wavelet kernel.
+% \end{itemize}
+
+% After computing the Hadamard product, an inverse Fourier transform of the result creates a (spatial) response map. This process is illustrated in Fig.~\ref{fig:hadamardConv}. The response map may need to be cropped to the initial image dimensions.
+
+% Whereas wavelet functions are usually defined as a cascade of high- and low-pass filters, here we focus on the band-pass filters corresponding to the consecutive subbands (i.e. response maps) that would results from combined high- and low-pass filtering (see introductory paragraph of Section~\ref{sec:wavelets}).
+% In other words, these response maps can be directly obtained using a corresponding band-pass filter $h_B[\boldsymbol{k}]$, without the need for re-convolving with previous iterations of the wavelet transform. The resulting response maps are referred to as ``B maps''.
+
+% An easy way to implement several consecutive iterations of such a non-separable wavelet transform is to start from the initial definition of the band-pass filter (the one with highest frequency band, \emph{e.g.} Eq.~\eqref{eq:simoncelliWavelet}), and constructing the filter with half $\nu_B$ at every consecutive step.
+% Concretely, the band-pass filter at a given scale level $j$ is obtained by replacing $\nu_B$ by $\frac{\nu_B}{2^j}$ in~\eqref{eq:shannonWavelet} or~\eqref{eq:simoncelliWavelet}). As before, the response map can then be computed by taking the Hadamard product of the band-pass filter and the image in Fourier domain, and then performing an inverse Fourier transform.
+
 \subsection{Wavelets: Considerations for Radiomics}\label{sec:waveletConsiderations}
 %
 To summarise, undecimated non-separable wavelets have the advantage of yielding isotropic (\textit{i.e.} rotation invariant/equivariant, see Section~\ref{sec:combiningDSandRotInv}) and translation equivariant image analysis. Moreover, they yield only one response per decomposition level (\textit{i.e.} one per scale), which significantly reduces the number of radiomics features when compared to their separable counterpart.
 %
 Separable wavelets were mostly designed for image coding, which has very different design constraints.
 They yield a large collection of response maps that are biased towards image axes and lack rotational invariance.
-While it is possible to make them approximately rotation invariant using orientation pooling over equivariant right angle representations as suggested in Section~\ref{sec:combiningDSandRotInv} and Appendix~\ref{app:separableConvRightAngleEquivariant}, we do not recommend to use this orientation pooling procedure for levels larger than 1 (see further recommendations in Section~\ref{sec:troubleshootRecommend}).
+While it is possible to make them approximately rotation invariant using orientation pooling over equivariant right angle representations as suggested in Section~\ref{sec:combiningDSandRotInv} and Appendix~\ref{app:separableConvRightAngleEquivariant}, we do not recommend to use this orientation pooling procedure for levels larger than 1.
+Applying orientation pooling after every convolution operation of a multi-level separable wavelet decomposition would result in an overly complicated algorithm, yielding only approximate rotational invariance where the granularity of the approximation depends on the number of group elements (\emph{e.g.} right angles only or using more angular samples) in the used equivariant representation.
+Therefore, we recommend not to use separable wavelet for rotation invariant image analysis, or to limit the wavelet decomposition to only one level.
 Isotropic non-separable wavelets such as the Simoncelli wavelet allow achieving multi-level, truly isotropic and rotation invariant image analysis by design.
 When the directionality of image patterns of interest (\textit{e.g.}, tumour margin, vessels) is expected to be important, aligned directional wavelet filters such as Riesz (Section~\ref{sec:Riesz}) that allow combining directional sensitivity with local invariance to rotations can be considered (see Section~\ref{sec:combiningDSandRotInv}).
 %
+
 \section{Riesz}\label{sec:Riesz}
 %
 Whereas non-separable wavelets like Simoncelli constitute an excellent first solution for using wavelets in radiomics studies, they are also circularly symmetric and therefore cannot characterise directional patterns.
-However, these non-separable circularly symmetric wavelets can be advantageously combined with directional analysis methods such as directional derivatives or spherical harmonics.
+To address directionality of patterns, these non-separable circularly symmetric wavelets can be advantageously combined with directional analysis methods such as directional derivatives~\cite{Prasanna2014} or spherical harmonics.
 
-An elegant approach to obtain features measuring directional transitions between pixel values (\textit{e.g.} gradient- or Hessian-like) is to compute them in the Fourier domain instead of using pixel differences in Gaussian-smoothed images~\cite{DeF2017}.
+An elegant approach to obtain features measuring directional transitions between pixel values is to use image derivatives. 
+Besides being simple to compute, these have the advantage of being interpretable (at least for the first- and second-order), which makes them attractive for understanding the meaning of the texture measures in a particular medical or biological application context. 
+For instance, the first-order derivative is called the gradient and informs about the slope of the transitions in the image, \emph{e.g.} sharp versus smooth transitions.
+Second-order derivatives are called Hessian and quantify the curvature of the transitions.
+It is worth noting that the spatial scale of these transitions will be controlled by a preliminary isotropic filtering step based on \emph{e.g.} a Gaussian smoother (low-pass) or a Simoncelli wavelet (band-pass). 
+
+An interesting option to compute the derivatives is to do so in the Fourier domain~\cite{DeF2017}.
 This also provides the opportunity to easily compute higher-order image derivatives of order $l$ as
 %
 \begin{equation}\label{eq:FourierDerivative}
@@ -1229,9 +1450,23 @@ This also provides the opportunity to easily compute higher-order image derivati
 %
 where $1\leq i \leq D$.
 It can be noticed that differentiating an image along the direction $k_i$ only requires multiplying its Fourier transform by $\mathrm{j}\nu_i$.
-Computing $l^{\text{th}}$-order derivatives has an intuitive interpretation (\emph{e.g.}, gradient for $l=1$, curvature for $l=2$), which makes them attractive for understanding the meaning of the texture measures in a particular medical or biological application context.
-However, a pure image derivative filter as computed in Eq.~(\ref{eq:FourierDerivative}) is high-pass (because multiplied by $\nu_i$) and accentuates high frequencies along $k_i$.
-Therefore, it is desirable to implement image derivatives as all-pass filters, which is what the 1st-order Riesz transform yields $\boldsymbol{\mathcal{R}}\{f\}[\boldsymbol{k}]$ as~\cite{UnV2010}
+Computing $l^{\text{th}}$-order derivatives has an intuitive interpretation (\emph{e.g.}, gradient for $l=1$, curvature for $l=2$).
+Let us illustrate this by differentiating a simple 2$D$ Gaussian function of dimension $N=32$ (see Fig.~\ref{fig:GaussianDerivative}).
+A Gaussian function $f[\boldsymbol{k}]$ is first transformed in the Fourier domain resulting in $\hat{f}[\boldsymbol{\nu}]$. It is worth noting that the Fourier transform of a Gaussian is real-valued and also a Gaussian.
+In parallel, the derivative kernel $\mathrm{j}\nu_1$ can be simply defined by multiplying the Fourier coordinate grid $\nu_1$ (see Fig.~\ref{fig:coordinateGridsFourier}) by the imaginary unit $\mathrm{j}$.
+Whe using the Hadamard product in Fourier and then back to the space domain (\emph{i.e.} convolution operation as depicted in Fig.~\ref{fig:hadamardConv}), the result corresponds to the derivative of $f$ along $k_1$, $\frac{\partial}{\partial k_1} f[\boldsymbol{k}]$.
+%
+\begin{figure}
+\centering
+\includegraphics[trim = 0 0 0 0, clip, width=1\linewidth]{GaussianDerivative.pdf}\\
+\caption{Deriving an image in the Fourier domain (illustrated with a Gaussian function). The notation $\Im(\cdot)$ denotes the imaginary part.}
+  \label{fig:GaussianDerivative}
+\end{figure}
+%
+
+Unfortunately, a pure image derivative filter as computed in Eq.~(\ref{eq:FourierDerivative}) is high-pass (because multiplied by $\nu_i$) and accentuates high frequencies along $k_i$.
+Therefore, it is desirable to implement image derivatives as all-pass filters instead of high-pass, by simply normalising the derivative kernel $\mathrm{j}\nu_i$ by the coordinate norm $\boldsymbol{\nu}$.
+This is exactly what the first-order Riesz transform yields $\boldsymbol{\mathcal{R}}\{f\}[\boldsymbol{k}]$ as~\cite{UnV2010}
 %
 \begin{equation}\label{eq:RieszTranform}
 \boldsymbol{\mathcal{R}}\{f\}[\boldsymbol{k}]=
@@ -1248,6 +1483,7 @@ Therefore, it is desirable to implement image derivatives as all-pass filters, w
 It can be noticed that dividing the Fourier representation by the norm of $\boldsymbol{\nu}$ transforms Eq.~\eqref{eq:FourierDerivative} in $D$ all-pass operators $\mathcal{R}_i$.
 Eq.~\eqref{eq:RieszTranform} can be used to compute first-order directional derivatives (\textit{i.e.} gradient-like for characterising image edges).
 However, higher-order derivatives can be relevant for radiomics studies (\textit{e.g.} second-order or Hessian-like for characterising image ridges like tumour margin or vessels).
+% add example difference between high-pass derivative and "Riesz-based" derivative. REMARK: zero average along x, hence the vertical black stripe in the spectrums
 For a fixed (maximal) order $L$, the collection of higher-order all-pass image derivatives are defined in the Fourier domain as
 %
 \begin{equation}\label{eq:RieszTransformHigherOrder}
@@ -1361,18 +1597,12 @@ LoG & no & yes & no (yes with DoG) & yes/no \\
 \end{center}
 \end{table}
 %
-\chapter{Filtering for Radiomics in Practice}\label{sec:practicalConsiderations}
+\section{Interpolation and convolutional filtering}\label{sec:interpolationAndFiltering}
 %
 
-Filtering is part of image processing for radiomics. When applied to an image, displacements of one voxel may not correspond to a displacement of the same physical distance depending on the direction. 
+When applied to an image, displacements of one voxel may not correspond to a displacement of the same physical distance depending on the direction. 
 Physical distance is defined by voxel spacing which, in 3$D$ imaging, commonly differs between directions and images. This case is referred to as ``anisotropic'' image resolution. For example, in-plane voxel spacings in computed tomography (CT) images are usually smaller than the slice thickness. Also, voxel spacing can differ between acquisition protocols. Thus, simply applying filters to all images generates response maps that cannot be directly compared, because the frequency response of filters is different. To avoid this problem, we recommend performing filtering after resampling the image to uniform voxel spacing using interpolation (see Fig.~\ref{fig:imageProcessing}).
-
-\begin{figure}
-\centering
-\includegraphics[]{Image_processing_with_filtering.pdf}
-\caption{Overall image processing scheme with image filtering (adapted from Zwanenburg \textit{et al.}~\cite{ZLV2017}). After loading a medical image, the image data are optionally converted (\textit{e.g.} SUV normalisation). The image may then undergo further post-processing (\textit{e.g.} noise reduction, bias field correction). Subsequently, a segmentation mask is created or loaded to identify the ROI in the image. The image is subsequently interpolated to ensure that image voxels are isometric, after which image filters may be applied to the image. The ROI mask is interpolated to the same grid as the image, prior to forming intensity and morphological ROI masks. The intensity (but not morphological) mask is optionally re-segmented based on image intensities of the unfiltered image. Subsequently, features are computed from the filtered image and the applicable ROI masks. The intensities in ROI intensity mask may undergo discretisation prior to computing features from \textit{e.g.} texture families. IH: intensity histogram; IVH: intensity-volume histogram; GLCM: grey level cooccurrence matrix; GLRLM: grey level run length matrix; GLSZM: grey level size zone matrix; NGTDM: neighbourhood grey tone difference matrix; NGLDM: Neighbouring grey level dependence matrix; GLDZM: grey level distance zone matrix; *A different discretisation scheme is usually used for computing IVH features.}
-\label{fig:imageProcessing}
-\end{figure}
+%%% RECOMMENDATION
 
 However, performing image interpolation prior to filtering yields its own issues (see Fig.~\ref{fig:radiomics_filter_before_interpolation}). Interpolation itself, by definition, alters the frequency content of the image, which may be particularly visible in response maps created by  high-pass filters (see Fig.~\ref{fig:radiomics_filter_after_interpolation}). As can be observed from the figure, trilinear interpolation acts as a low-pass filter when upsampling, whereas the tricubic spline method keeps preserves more high-frequency content. Ideal interpolation methods for upsampling do not exist as it is impossible to completely infer missing data. While we expect that superresolution based on deep learning could be used to improve interpolation results in the future~\cite{Dong2014}, in the meantime features derived from response maps created by high-pass filters may lack robustness.
 %
@@ -1520,6 +1750,7 @@ For most applications, boundary conditions are not critical as ROIs do not tend 
 
 % Feature computation
 In general, image features, or a subset of features, may be calculated from response maps in the same way as for the original image. Image filtering also affects the discretisation method that can be used prior to computing, for example texture features. Intensities in most response maps no longer have a direct physical meaning. Hence, \textit{fixed bin size} methods can no longer be used for response maps. \textit{Fixed bin number} or similar discretisation methods should be used instead~\cite{ZLV2017}.
+%%% RECOMMENDATION ???
 %
 \chapter{Benchmarking}\label{sec:benchmarking}
 %
@@ -1693,8 +1924,9 @@ An example of comparison of 120 simulated response maps is shown in Fig.~\ref{fi
     \begin{minipage}[t]{\linewidth}
     \begin{itemize}[nosep,after=\strut,leftmargin=*]
         \item zero padding
-        \item 3$D$ filter, E5L5S5 energy map, distance $\delta = 7$ voxels
-        \item 3$D$ rotation invariance, \texttt{max} pooling
+        \item 3$D$ filter, E5L5S5 response map
+        \item 3$D$ rotation invariance, \texttt{max} pooling 
+        \item energy map, distance $\delta = 7$ voxels
     \end{itemize}
     \end{minipage} \\ \cline{4-4}    
     3.b.1 & & checkerboard &
@@ -1716,8 +1948,9 @@ An example of comparison of 120 simulated response maps is shown in Fig.~\ref{fi
     \begin{minipage}[t]{\linewidth}
     \begin{itemize}[nosep,after=\strut,leftmargin=*]
         \item mirror padding
-        \item 3$D$ filter, E3W5R5 energy map, distance $\delta = 7$ voxels
+        \item 3$D$ filter, E3W5R5 response map
         \item 3$D$ rotation invariance, \texttt{max} pooling
+        \item energy map, distance $\delta = 7$ voxels
     \end{itemize}
     \end{minipage} \\ \cline{4-4}    
     3.c.1 & & checkerboard &
@@ -1739,8 +1972,9 @@ An example of comparison of 120 simulated response maps is shown in Fig.~\ref{fi
     \begin{minipage}[t]{\linewidth}
     \begin{itemize}[nosep,after=\strut,leftmargin=*]
         \item mirror padding
-        \item 2$D$ filter, L5S5 energy map, distance $\delta = 7$ voxels
+        \item 2$D$ filter, L5S5 response map
         \item 2$D$ rotation invariance, \texttt{max} pooling
+        \item energy map, distance $\delta = 7$ voxels
     \end{itemize}
     \end{minipage} \\
     \midrule
@@ -1835,21 +2069,18 @@ An example of comparison of 120 simulated response maps is shown in Fig.~\ref{fi
     8.a.1 & Simoncelli & checkerboard & 
     \begin{minipage}[t]{\linewidth}
     \begin{itemize}[nosep,after=\strut,leftmargin=*]
-        \item periodic padding
         \item 3$D$ filter, B map -- 1\textsuperscript{st} level
     \end{itemize}
     \end{minipage} \\ \cline{4-4}     
     8.a.2 & & & 
     \begin{minipage}[t]{\linewidth}
     \begin{itemize}[nosep,after=\strut,leftmargin=*]
-        \item periodic padding
         \item 3$D$ filter, B map -- 2\textsuperscript{nd} level
     \end{itemize}
     \end{minipage} \\ \cline{4-4}       
     8.a.3 & & & 
     \begin{minipage}[t]{\linewidth}
     \begin{itemize}[nosep,after=\strut,leftmargin=*]
-        \item periodic padding
         \item 3$D$ filter, B map -- 3\textsuperscript{rd} level
     \end{itemize}
     \end{minipage} \\    
@@ -1949,13 +2180,13 @@ re-segmentation & & \\
 image filters & & \\
 \quad filters & see Table \ref{tab:lung_ct_image_filter_configurations} & see Table \ref{tab:lung_ct_image_filter_configurations}\\
 \quad boundary condition & mirror & mirror\\
-discretisation\textsuperscript{a} & & \\
-\quad intensity histogram & FBN: 16 bins & FBN: 16 bins\\
+% discretisation\textsuperscript{a} & & \\
+% \quad intensity histogram & FBN: 16 bins & FBN: 16 bins\\
 \bottomrule
 \end{tabular}
 \normalsize
-\caption{Image processing configurations for obtaining reference values for intensity-based statistical features and Intensity Histogram (IH) features after image filtering in the lung cancer CT image. The different processing steps are described in the IBSI reference manual~\cite{Zwanenburg2020-jt}. Note that the image should not be cropped. ROI: Region Of Interest; HU: Hounsfield Unit; FBN: Fixed Bin Number.
-\newline \textsuperscript{a} Fixed bin size cannot be used with most image filters, as intensities in response maps may no longer represent calibrated intensities.}
+\caption{Image processing configurations for obtaining reference values for intensity-based statistical features and Intensity Histogram (IH) features after image filtering in the lung cancer CT image. The different processing steps are described in the IBSI reference manual~\cite{Zwanenburg2020-jt}. Note that the image should not be cropped. Also note the use of a higher order (spline) resampling method instead of linear interpolation. ROI: Region Of Interest; HU: Hounsfield Unit.}
+% \newline \textsuperscript{a} Fixed bin size cannot be used with most image filters, as intensities in response maps may no longer represent calibrated intensities.}
 \label{tab:lung_ct_image_processing_configurations}
 \end{table}
 
@@ -2003,11 +2234,20 @@ discretisation\textsuperscript{a} & & \\
     & & &\(\times\) & 
     \begin{minipage}[t]{\linewidth}
     \begin{itemize}[nosep,after=\strut,leftmargin=*]
-        \item 3$D$ filter, L5E5E5 energy map, distance $\delta = 7$ voxels
+        \item 3$D$ filter, L5E5E5 response map
         \item 3$D$ rotation invariance, \texttt{max} pooling
+        \item  energy map, distance $\delta = 7$ voxels
     \end{itemize}
     \end{minipage} \\ \hline
-    5.A | 5.B & Gabor & \(\times\) & \(\times\) & 
+    5.A | 5.B & Gabor & \(\times\) &  & 
+    \begin{minipage}[t]{\linewidth}
+    \begin{itemize}[nosep,after=\strut,leftmargin=*]
+        \item 2$D$ modulus response map
+        \item \(\sigma^*=5\) mm, \(\lambda^*=2\) mm, \(\gamma=3/2\)
+        \item 2$D$ rotation invariance, \(\Delta\theta = \pi/8\), \texttt{average} pooling
+    \end{itemize}
+    \end{minipage} \\ \cline{5-5}     
+    & & &\(\times\) & 
     \begin{minipage}[t]{\linewidth}
     \begin{itemize}[nosep,after=\strut,leftmargin=*]
         \item 2$D$ modulus response map
@@ -2127,8 +2367,8 @@ Only part of the radiomics features standardised previously need to be reported.
 These features are listed below with their permanent identifiers.
 
 \begin{enumerate}
-    \item Intensity-based statistical features (\textid{UHIW})
-    \begin{enumerate}
+    % \item Intensity-based statistical features (\textid{UHIW})
+    % \begin{enumerate}
         \item Mean intensity (\textid{Q4LE})
         \item Intensity variance (\textid{ECT3})
         \item Intensity skewness (\textid{KE2A})
@@ -2147,41 +2387,39 @@ These features are listed below with their permanent identifiers.
         \item Intensity-based quartile coefficient of dispersion (\textid{9S40})
         \item Intensity-based energy (\textid{N8CA})
         \item Root mean square intensity (\textid{5ZWQ})
-    \end{enumerate}
-    \item Intensity histogram features (\textid{ZVCW})
-    \begin{enumerate}
-        \item Mean discretised intensity (\textid{X6k6})
-        \item Discretised intensity variance (\textid{CH89})
-        \item Discretised intensity skewness (\textid{88K1})
-        \item (Excess) discretised intensity kurtosis (\textid{C3I7})
-        \item Median discretised intensity (\textid{WIFQ})
-        \item Minimum discretised intensity (\textid{1PR8})
-        \item 10\textsuperscript{th} discretised intensity percentile (\textid{GPMT})
-        \item 90\textsuperscript{th} discretised intensity percentile (\textid{OZ0C})
-        \item Maximum discretised intensity (\textid{3NCY})
-        \item Intensity histogram mode (\textid{AMMC})
-        \item Discretised intensity interquartile range (\textid{WR0O})
-        \item Discretised intensity range (\textid{5Z3W})
-        \item Intensity histogram mean absolute deviation (\textid{D2ZX})
-        \item Intensity histogram robust mean absolute deviation (\textid{WRZB})
-        \item Intensity histogram median absolute deviation (\textid{4RNL})
-        \item Intensity histogram coefficient of variation (\textid{CWYJ})
-        \item Intensity histogram quartile coefficient of dispersion (\textid{SLWD})
-        \item Discretised intensity entropy (\textid{TLU2})
-        \item Discretised intensity uniformity (\textid{BJ5W})
-    \end{enumerate}
+    % \end{enumerate}
+    % \item Intensity histogram features (\textid{ZVCW})
+    % \begin{enumerate}
+    %     \item Mean discretised intensity (\textid{X6k6})
+    %     \item Discretised intensity variance (\textid{CH89})
+    %     \item Discretised intensity skewness (\textid{88K1})
+    %     \item (Excess) discretised intensity kurtosis (\textid{C3I7})
+    %     \item Median discretised intensity (\textid{WIFQ})
+    %     \item Minimum discretised intensity (\textid{1PR8})
+    %     \item 10\textsuperscript{th} discretised intensity percentile (\textid{GPMT})
+    %     \item 90\textsuperscript{th} discretised intensity percentile (\textid{OZ0C})
+    %     \item Maximum discretised intensity (\textid{3NCY})
+    %     \item Intensity histogram mode (\textid{AMMC})
+    %     \item Discretised intensity interquartile range (\textid{WR0O})
+    %     \item Discretised intensity range (\textid{5Z3W})
+    %     \item Intensity histogram mean absolute deviation (\textid{D2ZX})
+    %     \item Intensity histogram robust mean absolute deviation (\textid{WRZB})
+    %     \item Intensity histogram median absolute deviation (\textid{4RNL})
+    %     \item Intensity histogram coefficient of variation (\textid{CWYJ})
+    %     \item Intensity histogram quartile coefficient of dispersion (\textid{SLWD})
+    %     \item Discretised intensity entropy (\textid{TLU2})
+    %     \item Discretised intensity uniformity (\textid{BJ5W})
+    % \end{enumerate}
 \end{enumerate}
 
-\section{Troubleshooting and Recommendations}\label{sec:troubleshootRecommend}
-This sections contains several directions to troubleshoot your filtering implementations, as well as recommendations to get most of a considered filter family in a radiomics application.
-
-\subsection{Rotation invariance and separable wavelets}
-A first recommendation concerns the use of separable wavelets for rotation invariant image analysis. We extend here the discussion initiated in Section~\ref{sec:waveletConsiderations}. 
-It was highlighted that separable wavelets were initially designed for image compression and coding efficiency and their use for image analysis (\emph{e.g.} radiomics) deviates from their initial purpose. In particular, they yield many response maps that are biased towards image axes and lack rotational invariance.
-Nevertheless, approximate rotationally invariant image analysis using separable wavelets can be achieved using (voxelwise) orientation pooling over equivariant (\emph{e.g.} right angle) representations as suggested in Section~\ref{sec:combiningDSandRotInv} for the first level of the decomposition.
-However, applying orientation pooling after every convolution operation of a multi-level separable wavelet decomposition would result in an overly complicated algorithm, yielding only approximate rotational invariance where the granularity of the approximation depends on the number of group elements (\emph{e.g.} right angles only or using more angular samples) in the used equivariant representation.
-Therefore, we recommend not to use separable wavelet for rotation invariant image analysis, or to limit the wavelet decomposition to only one level.
-We recommend to use non-separable isotropic wavelets to achieve a true and multi-level rotation-invariant image analysis by design (see Section~\ref{sec:waveletConsiderations}).
+In addition some diagnostic features may be reported. Configurations A and B are similar to those used in IBSI 1. However the use of a higher order interpolation method precludes the direct use of diagnostic features from the previous work. Most features are based on the ROI intensity mask after interpolation and re-segmentation, since these features will be different from those previously established:
+\begin{enumerate}
+    \item Number of voxels in the ROI mask, before interpolation.
+    \item Number of voxels in the ROI intensity mask, after interpolation and re-segmentation.
+    \item Mean intensity in the ROI intensity mask after interpolation and re-segmentation.
+    \item Maximal intensity in the ROI intensity mask after interpolation and re-segmentation.
+    \item Minimal intensity in the ROI intensity mask after interpolation and re-segmentation.
+\end{enumerate}
 
 \chapter{Conclusion}
 In this document we detail various convolutional image filters to standardise their implementation in radiomics software. Such filters are used to convert medical images into response maps that emphasise characteristics such as edges, blobs or directional structures. Quantifying such characteristics using standardised radiomics software will open the way to their reproducible assessment and validation, and their translation from bench to bedside.
