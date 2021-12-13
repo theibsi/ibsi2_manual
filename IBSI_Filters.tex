@@ -217,7 +217,14 @@ Copyright information regarding the benchmark data sets may be found on GitHub\f
 
 \subsection*{Change notes}
 
-Changes in version 4:
+\noindent Changes in version 5:
+\begin{itemize}
+    \item Updated list of participants.
+    \item Clarified the intended use of the "mirror" boundary condition (section \ref{sec:boundaryConditions}).
+    \item The 2D tests in phase 2 are now without interpolation (section \ref{sec:featureBenchmarkLungCT}).
+\end{itemize}
+
+\noindent Changes in version 4:
 \begin{itemize}
     \item A list of participants was added.
     \item Moved embedding of convolutional filtering in radiomics workflow to section \ref{sec:overallWorkflow}.
@@ -232,7 +239,7 @@ Changes in version 4:
 \end{itemize}
 
 \subsection*{Participants}
-\marginnote{\footnotesize v4: Added list of participants.}
+\marginnote{\footnotesize v4: Added list of participants. v5: updated list.}
 The following people contributed to this reference manual and the project as a whole.
 
 % TODO: Add list of participants
@@ -259,11 +266,13 @@ Vincent Andrearczyk
 Aditya Apte
 & Department of Medical Physics, Memorial Sloan Kettering Cancer Center, New York (NY), USA\\ 
 Alexandre Ayotte
-& Department of Computer Science, Interdisciplinary Research Group in Health Informatics (GRIIS), University of Sherbrooke, Canada\\ Bhakti Vilas Baheti
+& Department of Computer Science, Interdisciplinary Research Group in Health Informatics (GRIIS), University of Sherbrooke, Canada\\
+Bhakti Vilas Baheti
 & Center for Biomedical image Computing and Analytics (CBICA), University of Pennsylvania, Philadelphia (PA), USA\\ 
 Spyridon Bakas
 & Center for Biomedical image Computing and Analytics (CBICA), University of Pennsylvania, Philadelphia (PA), USA; Department of Radiology, Perelman School of Medicine, University of Pennsylvania, Philadelphia (PA), USA; Department of Pathology and Laboratory Medicine, Perelman School of Medicine, University of Pennsylvania, Philadelphia (PA), USA\\
-Andrea Bettinelli & Veneto Institute of Oncology - IOV IRCSS, Padova, Italy\\
+Andrea Bettinelli
+& Veneto Institute of Oncology - IOV IRCSS, Padova, Italy\\
 Ronald Boellaard
 & Department of Nuclear Medicine and Molecular Imaging, University of Groningen, University Medical Center Groningen (UMCG), Groningen, The Netherlands; Radiology and Nuclear Medicine, VU University Medical Centre (VUMC), Amsterdam, The Netherlands\\ 
 Marta Bogowicz
@@ -295,6 +304,8 @@ Jacopo Lenkowicz
 Steffen L{\"o}ck
 & OncoRay – National Center for Radiation Research in Oncology, Faculty of Medicine and University Hospital Carl Gustav Carus, Technische Universität Dresden, Helmholtz-Zentrum Dresden - Rossendorf, Dresden, Germany; German Cancer Consortium (DKTK), Partner Site Dresden, and German Cancer Research Center (DKFZ), Heidelberg, Germany; Department of Radiotherapy and Radiation Oncology, Faculty of Medicine and University Hospital Carl Gustav Carus, Technische Universität Dresden, Dresden, Germany\\ 
 Francesca Marturano & Veneto Institute of Oncology - IOV IRCSS, Padova, Italy\\
+Francesca Marturano
+& Veneto Institute of Oncology - IOV IRCSS, Padova, Italy\\
 Olivier Morin
 & Department of Radiation Oncology, University of California, San Francisco (CA), USA\\ 
 Henning Müller
@@ -305,10 +316,12 @@ Fanny Orlhac
 & Laboratory of Translational Imaging in Oncology, U1288 Inserm, Institut Curie, Université PLS, Orsay, France \\ 
 Sarthak Pati
 & Center for Biomedical image Computing and Analytics (CBICA), University of Pennsylvania, Philadelphia (PA), USA; Department of Radiology, Perelman School of Medicine, University of Pennsylvania, Philadelphia (PA), USA\\ 
-Elisabeth A.G. Pfaehler
-& Universitätsklinikum Augsburg, Augsburg, Germany\\ 
+% Elisabeth A.G. Pfaehler
+% & Universitätsklinikum Augsburg, Augsburg, Germany\\ 
 Christopher Rookyard
-& Cancer Imaging Dept, School of Biomedical Engineering and Imaging Sciences, King’s College London, London, United Kingdom\\ 
+& Cancer Imaging Dept, School of Biomedical Engineering and Imaging Sciences, King’s College London, London, United Kingdom\\
+Roger Schaer
+& Institute of Information Systems, University of Applied Sciences Western Switzerland (HES-SO), Sierre, Switzerland\\ 
 Andreas Schindele
 & Universitätsklinikum Augsburg, Augsburg, Germany\\ 
 Emiliano Spezi
@@ -322,7 +335,8 @@ Taman Upadhaya
 Vincenzo Valentini
 & Fondazione Policlinico Universitario "A. Gemelli" IRCCS, Rome, Italy\\ 
 Martin Valli{\`e}res
-& Department of Computer Science, Interdisciplinary Research Group in Health Informatics (GRIIS), University of Sherbrooke, Canada\\ Joost van Griethuysen
+& Department of Computer Science, Interdisciplinary Research Group in Health Informatics (GRIIS), University of Sherbrooke, Canada\\
+Joost van Griethuysen
 & Department of Radiology, the Netherlands Cancer Institute (NKI), Amsterdam, The Netherlands; GROW-School for Oncology and Developmental Biology, Maastricht University Medical Center, Maastricht, The Netherlands; Department of Radiation Oncology, Dana-Farber Cancer Institute, Brigham and Women’s Hospital, Harvard Medical School, Boston (MA), USA\\ 
 Philip Whybra
 & School of Engineering, Cardiff University, Cardiff, United Kingdom\\ 
@@ -626,6 +640,8 @@ This is illustrated in Fig.~\ref{fig:boundaryConditions2_c}.
 The introduced patterns are consistent with the actual image content and the transitions at the boundaries are relatively smooth, minimising convolution artefacts (see Fig.~\ref{fig:boundaryConditions2_d}).
 Depending on the software implementation, the extended image may include or exclude the boundary pixels of the original image.
 This method is also called \textit{symmetric}.
+\marginnote{\footnotesize v5: Clarified units of $\sigma$ and $\lambda$ parameters.}
+For consistency reasons, we assume that boundary pixels are included.
 %
 \begin{figure}
 \centering
@@ -971,8 +987,8 @@ $g_{R5R5}[\boldsymbol{k}]$
 Laws used his kernels to generate texture energy images~\cite{Law1980}. This is done in two steps. In the first step, a response map $h$ is generated by convolving the image with a Laws kernel along each image direction, as described above. Then, a smoothed image is computed where the absolute intensities\footnote{It is worth noting that whereas "energy" often involves the computation of squared quantities, the absolute value was proposed by Laws. The goal is to regroup negative and positive filter responses.} of voxels in $h$ within Chebyshev distance $\delta$ of a centre voxel are summed to create an energy image $h_{\text{energy}}$:
 $$h_{\text{energy}}[\boldsymbol{k}]=\frac{1}{W}\sum_{k_{0,1}=-\delta}^{\delta}
 \dots
-\sum_{k_{0,d}=-\delta}^{\delta}\left|h[\boldsymbol{k}+\boldsymbol{k_0}]\right|,$$
-where $\boldsymbol{k_0}=(k_{0,1},\dots,k_{0,d})$ and $W=\left(2\delta+1\right)^N$ the number of voxels in the $N$-dimensional neighbourhood.
+\sum_{k_{0,d}=-\delta}^{\delta}\left|h[\boldsymbol{k}+\boldsymbol{k}_0]\right|,$$
+where $\boldsymbol{k}_0=(k_{0,1},\dots,k_{0,d})$ and $W=\left(2\delta+1\right)^N$ the number of voxels in the $N$-dimensional neighbourhood.
 In practice, \(h_{\text{energy}}\) can be computed using kernel convolutions by convolving $|h|$ with a $2\delta+1$ element long 1$D$ kernel with constant values $1/\left(2\delta+1\right)$ along each of the image directions, \textit{i.e.} a mean filter as described in Section~\ref{subsec:meanFilter}.
 
 Note that the definition given above deviates from the one given by Laws~\cite{Law1980} by introducing the normalisation factor \(W\).
@@ -1297,7 +1313,7 @@ As a consequence, these functions are circularly symmetric and can be further co
 Non-separable wavelets are easily implemented directly in the Fourier domain using their unidimensional radial profile.
 The support of the filter in the Fourier domain is the same as the considered $N_1\times\cdots\times N_D$ image $f$ to allow for efficiently computing the convolution as a simple Hadamard product via Eq.~\eqref{eq:convolutionFFT}.
 Along dimension $i$, each coordinate $\nu_i$ is contained in $[-\frac{N_i}{2},\frac{N_i}{2}]$ which is centered around the null frequency $\boldsymbol{\nu}=\boldsymbol{0}$.
-The maximum coordinate value $\frac{N_i}{2}$ is denoted as $\nu_{B}$ and called the normalized Nyquist frequency, where $\nu_{B}=\pi$ radians/sample.
+The maximum coordinate value $\frac{N_i}{2}$ will be assigned to the value $\nu_{B}=\pi$ radians/sample, which is called the normalized Nyquist frequency.
 The unidimensional radial coordinate is then obtained as $||\boldsymbol{\nu}||=\sqrt{\nu_1^2+\nu_2^2+\dots+\nu_D^2}$.
 It is worth noting that the value of $||\boldsymbol{\nu}||$ will exceed $\nu_B$ in the corners of the image. These ``corner" values should be ignored as the corresponding frequencies can only be measured along diagonal directions, yielding anisotropic image analysis. They are ignored by construction for all proposed radial wavelets, e.g.~\eqref{eq:shannonWavelet} and~\eqref{eq:simoncelliWavelet}.
 
@@ -1444,9 +1460,9 @@ A qualitative comparison between classical image derivatives as defined in~\eqre
 \centering
 \includegraphics[trim = 0 0 0 0, clip, width=1\linewidth]{rieszVSderivative.png}\\
 \caption{Qualitative comparison between classical image derivatives (high-pass) as defined in~\eqref{eq:FourierDerivative} and Riesz-based image derivatives (all-pass) as defined in~\eqref{eq:RieszTranform}.\\
-\underline{First row:} Gaussian image ($f_1$) and its derivatives in the spatial domain. The classical derivative $\frac{\partial}{\partial k_1} f_1[\boldsymbol{k}]$ and the Riesz transform $\mathcal{R}^{(1,0)}\{f_1\}[\boldsymbol{k}]$ look very similar because the Gaussian image is essentially composed of low frequencies.\\
-\underline{Second row:} White noise image ($f_2$) and its derivatives in the spatial domain. The classical derivative $\frac{\partial}{\partial k_1} f_2[\boldsymbol{k}]$ contains mostly high frequencies, whereas the Riesz derivative $\mathcal{R}^{(1,0)}\{f_2\}[\boldsymbol{k}]$  retains all frequencies.\\
-\underline{Third row:} White noise image ($\hat{f}_2$) and its derivatives in the Fourier domain (moduluses are shown). The difference between the two derivatives approaches is striking, where the boost of high frequencies along $\nu_1$ for the classical derivative approach can be clearly seen in $|\widehat{\frac{\partial}{\partial k_1} f_2}|[\boldsymbol{\nu}]$. The vertical and centered black line results from the fact that first order derivatives are zero mean (\emph{i.e.} they contain no null frequencies).}
+\underline{First row:} Gaussian image $f_1$ and its derivatives in the spatial domain. The classical derivative $\frac{\partial}{\partial k_1} f_1[\boldsymbol{k}]$ and the Riesz transform $\mathcal{R}^{(1,0)}\{f_1\}[\boldsymbol{k}]$ look very similar because the Gaussian image is essentially composed of low frequencies.\\
+\underline{Second row:} White noise image $f_2$ and its derivatives in the spatial domain. The classical derivative $\frac{\partial}{\partial k_1} f_2[\boldsymbol{k}]$ contains mostly high frequencies, whereas the Riesz derivative $\mathcal{R}^{(1,0)}\{f_2\}[\boldsymbol{k}]$  retains all frequencies.\\
+\underline{Third row:} White noise image $\hat{f}_2$ and its derivatives in the Fourier domain (moduluses are shown). The difference between the two derivatives approaches is striking, where the boost of high frequencies along $\nu_1$ for the classical derivative approach can be clearly seen in $|\widehat{\frac{\partial}{\partial k_1} f_2}|[\boldsymbol{\nu}]$. The vertical and centered black line results from the fact that first order derivatives are zero mean (\emph{i.e.} they contain no null frequencies).}
   \label{fig:rieszVSderivative}
 \end{figure}
 %
@@ -1503,7 +1519,7 @@ Since Riesz filter banks include several filters with distinct profiles (see \te
 In particular, two suitable alignment criteria are those maximizing the gradients or the Hessian~\cite{DMP2017}, which can be efficiently computed directly from the Riesz coefficients using the structure (or Hessian) tensor~\cite{ChU2012}.
 The formulae for computing the regularised structure tensor from Riesz coefficients can be found in Section IV-B of Chenouard \textit{et al.}~\cite{ChU2012}.
 Regularizing the structure tensor is important to determine the scale of the structures from which the orientation is important at a given position $\boldsymbol{k}_0$.
-This must be optimized for the problem at hand via the variance $\sigma_{\text{tensor}}$ of a Gaussian window noted as $\nu(\boldsymbol{x})$ in Section IV-B of~\cite{ChU2012}.
+This must be optimized for the problem at hand via the variance $\sigma_{\text{tensor}}$ of a Gaussian window $g_{\sigma_{\text{tensor}}}[\boldsymbol{k}]$ noted as $\nu(\boldsymbol{x})$ in Section IV-B of~\cite{ChU2012}.
 Computing these alignment maps allows determining how to further orient all elements of the Riesz filter bank to achieve locally rotation invariant image analysis.
 More specifically, the collection of eigenvectors (sorted by corresponding eigenvalues) of the structure tensor at the position $\boldsymbol{k}_0$ yields a rotation matrix that can be used to align the Riesz filters. 
 Moreover, thanks to the steerability property of the Riesz transform~\cite{UnV2010}, no additional convolution operations are required to compute the response of rotated filters.
@@ -2127,6 +2143,8 @@ The lung cancer CT image is stored as a stack of slices in \texttt{DICOM} format
 
 Compared to the digital phantoms, the lung cancer CT image offers a more realistic setting to benchmark applications of image filters as part of a radiomics analysis. Image filtering is assessed as part of two different image processing configurations, see Table~\ref{tab:lung_ct_image_processing_configurations}. The main difference between the configurations is that one performs image processing and filtering within each image slice (\textit{i.e.} 2$D$), whereas the other operates in 3$D$. Features are still computed over the entire region of interest, as mentioned in the IBSI 1 reference manual. The filtering configurations are then shown in Table~\ref{tab:lung_ct_image_filter_configurations}.
 
+\marginnote{\footnotesize v5: Updated the 2D-test.}
+
 \begin{table}[h!]
 \centering
 \small
@@ -2135,12 +2153,12 @@ Compared to the digital phantoms, the lung cancer CT image offers a more realist
 \textbf{Parameter} & \textbf{Configuration A} & \textbf{Configuration B}\\
 \midrule
 slice-wise (2$D$) or as volume (3$D$) & 2$D$ & 3$D$\\
-interpolation & yes & yes\\
-\quad resampled voxel spacing (mm) & $1 \times 1$ (axial) & $1 \times 1 \times 1$\\
-\quad interpolation method & bicubic spline & tricubic spline\\
-\quad intensity rounding & nearest integer & nearest integer\\
-\quad ROI interpolation method & bilinear & trilinear\\
-\quad ROI partial mask volume & $0.5$ & $0.5$\\
+interpolation & no & yes\\
+\quad resampled voxel spacing (mm) & --- & $1 \times 1 \times 1$\\
+\quad interpolation method & --- & tricubic spline\\
+\quad intensity rounding & --- & nearest integer\\
+\quad ROI interpolation method & --- & trilinear\\
+\quad ROI partial mask volume & --- & $0.5$\\
 re-segmentation & & \\
 \quad range (HU) & $[-1000, 400]$ & $[-1000, 400]$\\
 \quad outlier filtering & none & none \\
