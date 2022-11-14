@@ -217,6 +217,21 @@ Copyright information regarding the benchmark data sets may be found on GitHub\f
 
 \subsection*{Change notes}
 
+\noindent Changes in version 7:
+\begin{itemize}
+    \item Reworked the filter configurations for the validation phase to be more realistic, see section \ref{sec:validationPhase}.
+\end{itemize}
+
+\noindent Changes in version 6:
+\begin{itemize}
+    \item Updated list of participants.
+    \item Updated description of the spatial extent of Gabor filters to produce the most consistent results (section \ref{sec:Gabor}).
+    \item Added implementation troubleshooting to clarify how undecimated wavelet decomposition should be implemented (section \ref{sec:separableWavelets}).
+    \item The description of how to align Riesz kernels was expanded and is now considerably more detailed (section \ref{sec:RieszAlignment}).
+    \item Added boundary condition for Simoncelli filters in phase 1 (configurations 8.a.1 - 3), see Table \ref{tab:benchmark_filter_settings}.
+    \item Added a new section for the validation phase (section \ref{sec:validationPhase}).
+\end{itemize}
+
 \noindent Changes in version 5:
 \begin{itemize}
     \item Updated list of participants.
@@ -239,7 +254,7 @@ Copyright information regarding the benchmark data sets may be found on GitHub\f
 \end{itemize}
 
 \subsection*{Participants}
-\marginnote{\footnotesize v4: Added list of participants. v5: updated list.}
+\marginnote{\footnotesize v4: Added list of participants. v5: updated list. v6: updated list.}
 The following people contributed to this reference manual and the project as a whole.
 
 % TODO: Add list of participants
@@ -280,7 +295,7 @@ Marta Bogowicz
 Luca Boldrini
 & Fondazione Policlinico Universitario "A. Gemelli" IRCCS, Rome, Italy\\ 
 Irène Buvat
-& Laboratory of Translational Imaging in Oncology, U1288 Inserm, Institut Curie, Université PLS, Orsay, France \\ 
+& Laboratory of Translational Imaging in Oncology, U1288 Inserm, Institut Curie, Université PSL, Orsay, France \\ 
 Gary J.R. Cook
 & Cancer Imaging Dept, School of Biomedical Engineering and Imaging Sciences, King’s College London, London, United Kingdom\\ 
 Adrien Depeursinge
@@ -289,6 +304,8 @@ Florian Dietsche
 & Department of Radiation Oncology, University Hospital Zurich, University of Zurich, Zurich, Switzerland\\ 
 Nicola Dinapoli
 & Fondazione Policlinico Universitario "A. Gemelli" IRCCS, Rome, Italy\\ 
+Hubert Gabrys
+& Department of Radiation Oncology, University Hospital Zurich, University of Zurich, Zurich, Switzerland\\ 
 Vicky Goh
 & Cancer Imaging Dept, School of Biomedical Engineering and Imaging Sciences, King’s College London, London, United Kingdom\\ 
 Matthias Guckenberger
@@ -301,9 +318,9 @@ Vincent Jaouen
 & IMT-Atlantique, Plouzané, France\\ 
 Jacopo Lenkowicz
 & Fondazione Policlinico Universitario "A. Gemelli" IRCCS, Rome, Italy\\ 
+Mahdi Ait Lhaj Loutfi & Department of Computer Science, Interdisciplinary Research Group in Health Informatics (GRIIS), University of Sherbrooke, Canada\\
 Steffen L{\"o}ck
 & OncoRay – National Center for Radiation Research in Oncology, Faculty of Medicine and University Hospital Carl Gustav Carus, Technische Universität Dresden, Helmholtz-Zentrum Dresden - Rossendorf, Dresden, Germany; German Cancer Consortium (DKTK), Partner Site Dresden, and German Cancer Research Center (DKFZ), Heidelberg, Germany; Department of Radiotherapy and Radiation Oncology, Faculty of Medicine and University Hospital Carl Gustav Carus, Technische Universität Dresden, Dresden, Germany\\ 
-Francesca Marturano & Veneto Institute of Oncology - IOV IRCSS, Padova, Italy\\
 Francesca Marturano
 & Veneto Institute of Oncology - IOV IRCSS, Padova, Italy\\
 Olivier Morin
@@ -311,25 +328,28 @@ Olivier Morin
 Henning Müller
 & Institute of Information Systems, University of Applied Sciences Western Switzerland (HES-SO), Sierre, Switzerland; University of Geneva, Geneva, Switzerland\\ 
 Christophe Nioche
-& Laboratory of Translational Imaging in Oncology, U1288 Inserm, Institut Curie, Université PLS, Orsay, France \\ 
+& Laboratory of Translational Imaging in Oncology, U1288 Inserm, Institut Curie, Université PSL, Orsay, France \\ 
 Fanny Orlhac
-& Laboratory of Translational Imaging in Oncology, U1288 Inserm, Institut Curie, Université PLS, Orsay, France \\ 
+& Laboratory of Translational Imaging in Oncology, U1288 Inserm, Institut Curie, Université PSL, Orsay, France \\ 
 Sarthak Pati
 & Center for Biomedical image Computing and Analytics (CBICA), University of Pennsylvania, Philadelphia (PA), USA; Department of Radiology, Perelman School of Medicine, University of Pennsylvania, Philadelphia (PA), USA\\ 
 % Elisabeth A.G. Pfaehler
 % & Universitätsklinikum Augsburg, Augsburg, Germany\\ 
 Christopher Rookyard
 & Cancer Imaging Dept, School of Biomedical Engineering and Imaging Sciences, King’s College London, London, United Kingdom\\
+Mohammad Reza Salmanpoor & Departments of Radiology and Physics, University of British Columbia, Vancouver (BC), Canada\\
 Roger Schaer
 & Institute of Information Systems, University of Applied Sciences Western Switzerland (HES-SO), Sierre, Switzerland\\ 
 Andreas Schindele
 & Universitätsklinikum Augsburg, Augsburg, Germany\\ 
 Emiliano Spezi
 & School of Engineering, Cardiff University, Cardiff, United Kingdom; Department of Medical Physics, Velindre Cancer Centre, Cardiff, United Kingdom\\ 
+Isaac Shiri Lord & PET Instrumentation \& Neuroimaging Laboratory (PINLab), Department of Radiology \& Medical Informatics, Geneva University Hospital, Geneva, Switzerland\\
 Stephanie Tanadini-Lang
 & Department of Radiation Oncology, University Hospital Zurich, University of Zurich, Zurich, Switzerland\\ 
 Florent Tixier
-& Laboratory of Medical Information Processing (LaTIM) - team ACTION (image-guided therapeutic action in oncology), INSERM, UMR 1101, IBSAM, UBO, UBL, Brest, France\\ 
+& Laboratory of Medical Information Processing (LaTIM) - team ACTION (image-guided therapeutic action in oncology), INSERM, UMR 1101, IBSAM, UBO, UBL, Brest, France\\
+Amir Hosein Toosi & Departments of Radiology and Physics, University of British Columbia, Vancouver (BC), Canada\\
 Taman Upadhaya
 & Department of Radiation Oncology, University of California, San Francisco (CA), USA\\ 
 Vincenzo Valentini
@@ -403,6 +423,7 @@ f(\boldsymbol{x})\overset{\mathcal{F}}{\longleftrightarrow}\hat{f}(\boldsymbol{\
 where $\boldsymbol{\omega}=(\omega_1,\dots,\omega_D) \in \mathbb{R}^D$ is the frequency coordinate vector and $\langle\cdot,\cdot\rangle$ denotes the scalar product.
 
 A discrete image is modeled as a $D$-dimensional function of the variable $\boldsymbol{k} = (k_1, \dots , k_D) \in \mathbb{Z}^D$, taking values $f[\boldsymbol{k}] \in \mathbb{R}$. 
+A subset of $\mathbb{Z}^D$ is considered in practice for the image domain with dimensions $N_1\times\cdots\times N_D$ as possible values for the index vector $\boldsymbol{k}$.
 The discrete Fourier transform\footnote{In this discrete setting, the normalised Nyquist frequency is denoted by $\nu_B=\pi$.} of a summable $f[\boldsymbol{k}]$ is noted $\hat{f}[\boldsymbol{\nu}]\in\mathbb{C}$, with $\boldsymbol{\nu}=(\nu_1,\dots,\nu_D) \in \mathbb{Z}^D$ the discrete frequency coordinate vector, and is defined as
 \begin{equation}\label{eq:discreteFourierTransform}
 f[\boldsymbol{k}]\overset{\mathcal{F}}{\longleftrightarrow}\hat{f}[\boldsymbol{\nu}]=
@@ -617,7 +638,7 @@ It is worth noting that this periodisation is implicit if the convolution operat
 This method is also called \textit{wrapping}, \textit{circular} or \textit{tiling}.
 %
 \subsection{Mirror}
-%
+\marginnote{\footnotesize v5: Clarified use of mirror boundary condition by the IBSI.}
 The mirror folding method consists of symmetrising the image at the boundaries. The extended image is
 $f_{\text{ext}}^{\text{mirror}}[\boldsymbol{k}]=f[\boldsymbol{k'}]$, with $\boldsymbol{k'} = (k'_1,\cdots,k'_D) \in \mathbb{Z}^D$, where
 % $$
@@ -640,7 +661,7 @@ This is illustrated in Fig.~\ref{fig:boundaryConditions2_c}.
 The introduced patterns are consistent with the actual image content and the transitions at the boundaries are relatively smooth, minimising convolution artefacts (see Fig.~\ref{fig:boundaryConditions2_d}).
 Depending on the software implementation, the extended image may include or exclude the boundary pixels of the original image.
 This method is also called \textit{symmetric}.
-\marginnote{\footnotesize v5: Clarified units of $\sigma$ and $\lambda$ parameters.}
+
 For consistency reasons, we assume that boundary pixels are included.
 %
 \begin{figure}
@@ -718,7 +739,6 @@ For consistency reasons, we assume that boundary pixels are included.
 \subsection{Considerations for Radiomics}
 %
 In many radiomics applications, the choice of boundary extension method is generally not important, as long as the ROI is sufficiently far from the image boundary, \textit{i.e.} at least by more than half of the convolution filter width/height/depth. In the uncommon case where the ROI is close to the border, the \textit{mirror} method may generally be recommended because it avoids sharp transitions and artificial patterns.
-%%% RECOMMENDATION to use the mirror boundary condition
 
 \chapter{Filtering Properties}\label{sec:linearFilterProperties}
 %
@@ -1175,19 +1195,16 @@ Collagen junctions oriented at $\theta=-\frac{\pi}{4}$ (top) and $\theta=\frac{\
 \end{figure}
 %
 
-\marginnote{\footnotesize v4: Clarified spatial extent of Gabor filter support.}
-As with Laplacian-of-Gaussian filters the spatial support of Gabor filters is \((-\infty, \infty\)) (\emph{i.e.} not compact). 
-Because this would require a filter with infinite spatial support, the Gabor filter is cropped in practice, based on the $\sigma$ and $\gamma$ parameters. The 1$D$ filter size is then:
-%
+\marginnote{\footnotesize v4: Clarified spatial extent of Gabor filter support; v6: Updated description to produce the most consistent results.}
+As with Laplacian-of-Gaussian filters the spatial support of Gabor filters is \((-\infty, \infty\)) (\emph{i.e.} not compact). However, unlike Laplacian-of-Gaussian filters, many standard implementations for Gabor filters do not use truncation. Instead, the most consistent results seem to be achieved by cropping the filter along each dimension $i$ as follows:
 \begin{equation}\label{eq:gaborFilterSupport}
-M= 
+M_i= 
 \begin{cases}
-1 + 2\lfloor d\, \sigma + 0.5\rfloor \quad\text{if} \quad \gamma \leq 1,\\
-1 + 2\lfloor d\, \gamma \sigma + 0.5\rfloor \quad\text{if} \quad \gamma > 1.
+N_i + 1 & \text{if } N_i \text{ is even}\\
+N_i & \text{if } N_i \text{ is odd}
 \end{cases}
 \end{equation}
 %
-with \(d\) the truncation parameter, and \(\sigma\) and \(\gamma\) in voxel units. Note that it is possible to more closely truncate the spatial support by accounting for the orientation of the filter, at the cost of increased complexity.
 
 Gabor filters are not rotation-invariant and are therefore best suited for applications where the absolute feature orientation is meaningful.
 Rotation equivariance and invariance can be approximated by combining the response maps of several elements of the Gabor filterbank (see Section~\ref{sec:combiningDSandRotInv}).
@@ -1232,7 +1249,6 @@ While others exist, a common upsampling approach is to use the \emph{\`{a} trous
 %
 \marginnote{\footnotesize v4: Clarified implementation of the \emph{\`{a} trous} algorithm.}
 The \emph{\`{a} trous} algorithm involves inserting zeros, or holes, into the filter kernel. For example, the high-pass kernel of the Haar wavelet is \(\left[ -1 / \sqrt{2}, 1 / \sqrt{2}\right]\). The first level decomposition of this high-pass kernel is \(\left[ -1 / \sqrt{2}, 0, 1 / \sqrt{2}\right]\), or alternatively \(\left[ -1 / \sqrt{2}, 0, 1 / \sqrt{2}, 0\right]\). The second level decomposition of the same kernel is formed by inserting zeros between the values of the first level kernel, forming \(\left[ -1 / \sqrt{2}, 0, 0, 0, 1 / \sqrt{2}\right]\), or alternatively \(\left[ -1 / \sqrt{2}, 0, 0, 0, 1 / \sqrt{2}, 0, 0, 0\right]\). Both alternatives are valid, but result in different response maps. Popular standard implementations in \texttt{MATLAB} and \texttt{pywavelets} use the second alternative. We therefore recommend using the second alternative for reproducibility.
-%%% RECOMMENDATION to use pywavelets
 
 The response maps $h^j[\boldsymbol{k}]$ produced through undecimated transform have the same dimensionality as the input image $f$ and are simply obtained via the convolution of $f[\boldsymbol{k}]$ with the filters $g_H^j$ and $g_L^j$ along each image direction.
 In 2$D$, this yields four response maps for every iteration: $h_{LL}^j$, $h_{LH}^j$, $h_{HL}^j$ and $h_{HH}^j$.
@@ -1301,6 +1317,34 @@ Kernel values of wavelet and scaling functions for $p>1$ can be obtained from th
 %
 There exists a large number of other separable wavelet/scaling function pairs (\textit{e.g.} Meyer, Coiflets), each targeting different objectives in terms of signal analysis. The kernel values of most common wavelets can be obtained from the Wavelet Browser of PyWavelets\footnote{http://wavelets.pybytes.com, as of July 2020.}.
 %
+\marginnote{\footnotesize v6: Added implementation troubleshooting to clarify how undecimated wavelet decomposition should be implemented.}
+%
+\vspace{2mm}
+\begin{tcolorbox}[width=150mm, halign=left, colframe=black, colback=white, boxsep=0mm, arc=3mm, colframe=black!50!white,
+title=Implementation Troubleshooting, title filled=true, fonttitle=\bfseries]
+\begin{itemize}
+\item Undecimated wavelet decomposition of separable wavelets require a sequence of steps. Here we illustrate these steps using the Haar wavelet for two iterations, where we want to compute the pseudo-rotation invariant response map of the high-pass ($HHH$) filter in the final iteration:
+    \begin{enumerate}
+        \item iteration $j=1$: 1\textsuperscript{st} decomposition level
+            \begin{itemize}
+                \item Define the basic low-pass $g_L$ kernel: $\left[1/\sqrt{2}, 1/\sqrt{2}\right]$
+                \item If necessary, append a zero to obtain an odd filter dimension: $g^1_{L_{odd}}=\left[1/\sqrt{2}, 1/\sqrt{2}, \mathbf{0}\right]$
+                \item Create a filter bank of 4 (2$D$) or 24 (3$D$) low-pass filter sets based on $g^1_{L_{odd}}$ for rotation invariance, see appendix \ref{app:separableConvRightAngleEquivariant}.
+                \item Apply each filter bank to obtain 4 (2$D$) or 24 (3$D$) response maps $h^1_j$.
+            \end{itemize}
+        \item iteration $j=2$: 2\textsuperscript{nd} decomposition level
+            \begin{itemize}
+                \item Define the basic high-pass $g_H$ kernel: $\left[-1/\sqrt{2}, 1/\sqrt{2}\right]$
+                \item Apply the à trous algorithm and insert zeros: $g^2_H=\left[-1/\sqrt{2}, \mathbf{0}, 1/\sqrt{2}, \mathbf{0} \right]$
+                \item If necessary, append a zero to obtain an odd filter dimension: $g^2_{H_{odd}}=\left[-1/\sqrt{2}, 0, 1/\sqrt{2}, 0, \mathbf{0} \right]$
+                \item Create a filter bank of 4 (2$D$) or 24 (3$D$) low-pass filter sets based on $g^2_{H_{odd}}$ for rotation invariance, see appendix \ref{app:separableConvRightAngleEquivariant}.
+                \item Apply each filter bank $j$ to the corresponding low-pass response maps of the previous iteration ($h^1_j$) obtain 4 (2$D$) or 24 (3$D$) response maps $h^2_j$.
+                \item Pool the response maps, for example through averaging, to obtain response map $h^2_{HHH}$.
+            \end{itemize}
+    \end{enumerate}
+\end{itemize}
+\end{tcolorbox}
+
 \subsection{Non-separable Wavelets}\label{sec:nonseparableWavelets}
 %
 \marginnote{\footnotesize v4: Extended description of non-separable wavelets.}
@@ -1420,7 +1464,7 @@ This also provides the opportunity to easily compute higher-order image derivati
 where $1\leq i \leq D$.
 It can be noticed that differentiating an image along the direction $k_i$ only requires multiplying its Fourier transform by $\mathrm{j}\nu_i$.
 Computing $l^{\text{th}}$-order derivatives has an intuitive interpretation (\emph{e.g.}, gradient for $l=1$, curvature for $l=2$).
-Let us illustrate this by differentiating a simple 2$D$ Gaussian function of dimension $N=32$ (see Fig.~\ref{fig:GaussianDerivative}).
+Let us illustrate this by differentiating a simple 2$D$ Gaussian function of dimension $32\times 32$ (see Fig.~\ref{fig:GaussianDerivative}).
 A Gaussian function $f[\boldsymbol{k}]$ is first transformed in the Fourier domain resulting in $\hat{f}[\boldsymbol{\nu}]$. It is worth noting that the Fourier transform of a Gaussian is real-valued and also a Gaussian.
 In parallel, the derivative kernel $\mathrm{j}\nu_1$ can be simply defined by multiplying the Fourier coordinate grid $\nu_1$ (see Fig.~\ref{fig:coordinateGridsFourier}) by the imaginary unit $\mathrm{j}$.
 Whe using the Hadamard product in Fourier and then back to the space domain (\emph{i.e.} convolution operation as depicted in Fig.~\ref{fig:hadamardConv}), the result corresponds to the derivative of $f$ along $k_1$, $\frac{\partial}{\partial k_1} f[\boldsymbol{k}]$.
@@ -1493,7 +1537,7 @@ A set of band-pass, multi-scale and multi-orientation filters $\boldsymbol{g}_{\
 \{g_{\sigma}\}[\boldsymbol{k}].
 \end{equation}
 
-An example of a 2$D$ Riesz filterbank for $N=2$ and combined with a Simoncelli wavelet is shown in Fig~\ref{fig:Riesz}.
+An example of a 2$D$ Riesz filterbank for $L=2$ and combined with a Simoncelli wavelet is shown in Fig~\ref{fig:Riesz}.
 Eq.~\eqref{eq:rieszFilter} yields a collection of filters measuring $L$-th order (scaled) derivatives. However, these derivatives are computed along image axes $k_1,\dots,k_D$, which entails similar challenges as separable wavelets: (i) analyzing images along their axes does not have a particular signification for the problem at hand (\textit{e.g.} characterising local tissue structures within a tumour) and (ii) they are not rotation invariant/equivariant.
 
 %
@@ -1508,30 +1552,123 @@ $\mathcal{R}^{(1,1)}
 \hspace{1.3cm}
 $\mathcal{R}^{(0,2)}
 \{g_{\text{sim}}\}[\boldsymbol{k}]$
-\caption{A 2$D$ Riesz filterbank for $N=2$ and combined with a Simoncelli wavelet.}
+\caption{A 2$D$ Riesz filterbank for $L=2$ and combined with a Simoncelli wavelet.}
   \label{fig:Riesz}
 \end{figure}
 %
-\subsection{Aligning Riesz kernels}
+\subsection{Aligning Riesz kernels}\label{sec:RieszAlignment}
+\marginnote{\footnotesize v6: Additional clarifications on how to align Riesz kernels were provided.}
 To address (i) and (ii), one can locally align all Riesz filters using a given alignment criterion to combine directional sensitivity with local invariance to rotations, as motivated in Section~\ref{sec:combiningDSandRotInv} and Fig.~\ref{fig:LRI_overview}.
 Whereas the max orientation pooling operation can be seen as an alignment criterion, the latter only focuses on the maximum response of one single filter.
 Since Riesz filter banks include several filters with distinct profiles (see \textit{e.g.} Fig.~\ref{fig:Riesz} with order $L=2$), other alignment criteria based on meaningful quantities can be used.
-In particular, two suitable alignment criteria are those maximizing the gradients or the Hessian~\cite{DMP2017}, which can be efficiently computed directly from the Riesz coefficients using the structure (or Hessian) tensor~\cite{ChU2012}.
-The formulae for computing the regularised structure tensor from Riesz coefficients can be found in Section IV-B of Chenouard \textit{et al.}~\cite{ChU2012}.
+We will seek for alignment criteria that are optimizing the response of the entire filterbank and not only one single kernel.
+
+Two suitable alignment criteria are those maximizing the gradients or the Hessian~\cite{DMP2017}, which can be efficiently computed directly from the Riesz coefficients using the structure (or Hessian) tensor $\mathrm{J}[\boldsymbol{k}_0]$~\cite{ChU2012}.
+It is worth noting that the while classical definition of the structure tensor is based on simple (high-pass) image derivatives, we can use in this context the all-pass image derivatives provided by the Riesz transform.
+In practice, it is beneficial to regularise this structure tensor using a Gaussian window $g_{\sigma_{\text{tensor}}}[\boldsymbol{k}]$ (noted as $\nu(\boldsymbol{x})$ in Section IV-B of~\cite{ChU2012}).
 Regularizing the structure tensor is important to determine the scale of the structures from which the orientation is important at a given position $\boldsymbol{k}_0$.
-This must be optimized for the problem at hand via the variance $\sigma_{\text{tensor}}$ of a Gaussian window $g_{\sigma_{\text{tensor}}}[\boldsymbol{k}]$ noted as $\nu(\boldsymbol{x})$ in Section IV-B of~\cite{ChU2012}.
+This must be optimized for the problem at hand via the variance $\sigma_{\text{tensor}}$ of a Gaussian window $g_{\sigma_{\text{tensor}}}[\boldsymbol{k}]$.
+It is worth noting that $g_{\sigma_{\text{tensor}}}$ is independent from the multi-scale framework used to compute the Riesz transform (e.g. Simoncelli or the LoG filter, see Eq.~\eqref{eq:rieszFilter}). 
+
+In 3$D$, the nine elements of the regularised structure tensor computed from Riesz coefficients at the position $\boldsymbol{k}_0$ are defined using (see Section IV-B of Chenouard \textit{et al.}~\cite{ChU2012})
+% \begin{equation}
+% \mathrm{J}[\boldsymbol{k}_0]=
+% \begin{pmatrix} 
+% \mathcal{R}_1^2\{g_{\sigma_{\text{tensor}}}\ast f\}[\boldsymbol{k}_0] & 
+% \mathcal{R}_1\mathcal{R}_2\{g_{\sigma_{\text{tensor}}}\ast
+% f\}[\boldsymbol{k}_0] 
+% & 
+% \mathcal{R}_1\mathcal{R}_3\{g_{\sigma_{\text{tensor}}}\ast
+% f\}[\boldsymbol{k}_0]\\ 
+% \mathcal{R}_2\mathcal{R}_1\{g_{\sigma_{\text{tensor}}}\ast f\}[\boldsymbol{k}_0] & 
+% \mathcal{R}_2^2\{g_{\sigma_{\text{tensor}}}\ast f\}[\boldsymbol{k}_0] 
+% & 
+% \mathcal{R}_2\mathcal{R}_3\{g_{\sigma_{\text{tensor}}}\ast
+% f\}[\boldsymbol{k}_0]
+% \\ 
+% \mathcal{R}_3\mathcal{R}_1\{g_{\sigma_{\text{tensor}}}\ast f\}[\boldsymbol{k}_0] & 
+% \mathcal{R}_3\mathcal{R}_2\{g_{\sigma_{\text{tensor}}}\ast f\}[\boldsymbol{k}_0] 
+% & 
+% \mathcal{R}_3^2\{g_{\sigma_{\text{tensor}}}\ast
+% f\}[\boldsymbol{k}_0]
+% \end{pmatrix},
+% \end{equation}
+\begin{equation}\label{eq:structureTensor}
+\Big[\mathrm{J}[\boldsymbol{k}_0]\Big]_{mn}=
+\sum_{\boldsymbol{k}\in\mathbb{Z}^D} g_{\sigma_{\text{tensor}}}[\boldsymbol{k}-\boldsymbol{k}_0]\cdot
+\mathcal{R}_m\{f\}[\boldsymbol{k}]\cdot\mathcal{R}_n\{f\}[\boldsymbol{k}],
+\end{equation}
+%
+where the indices $m,n\in\{1,2,3\}$ identify the combinations of all first-order 3$D$ Riesz components\footnote{To simplify the notations, the element e.g. $\mathcal{R}^{(1,0,0)}$ is noted $\mathcal{R}_1$, the element $\mathcal{R}^{(0,1,0)}$ is noted $\mathcal{R}_2$, etc.}.
+%applied on the regularized image \mbox{$g_{\sigma_{\text{tensor}}}\ast f$}.
+It is worth noting that while the sum is defined over the entire image domain $N_1\times\cdots\times N_D\subset\mathbb{Z}^D$, a smaller window can be considered in practice based on the decay of the Gaussian window $g_{\sigma_{\text{tensor}}}[\boldsymbol{k}]$.
+The collection of eigenvectors $(\boldsymbol{u}_1,\boldsymbol{u}_2,\boldsymbol{u}_3)$ of $\mathrm{J}$, sorted by eigenvalues, defines a rotation matrix $\mathrm{U}$ for every position $\boldsymbol{k}_0$.
+In 3$D$ for instance, $\mathrm{U}$ is a $3\times 3$ rotation matrix that maximizes the energy of $\mathcal{R}_1$, then maximizes the residual energy of $\mathcal{R}_2$, and then $\mathcal{R}_3$.
+Therefore, $\mathrm{U}$ constitutes an interesting alignment criteria for the position $\boldsymbol{k}_0$.
+Computing $\mathrm{J}$ and then $\mathrm{U}$ for every position in the image defines alignment maps, which however come with a high computational cost.
+
+
 Computing these alignment maps allows determining how to further orient all elements of the Riesz filter bank to achieve locally rotation invariant image analysis.
-More specifically, the collection of eigenvectors (sorted by corresponding eigenvalues) of the structure tensor at the position $\boldsymbol{k}_0$ yields a rotation matrix that can be used to align the Riesz filters. 
-Moreover, thanks to the steerability property of the Riesz transform~\cite{UnV2010}, no additional convolution operations are required to compute the response of rotated filters.
+%More specifically, the collection of eigenvectors (sorted by corresponding eigenvalues) of the structure tensor at the position $\boldsymbol{k}_0$ yields a rotation matrix that can be used to align the Riesz filters. 
+Thanks to the steerability property of the Riesz transform~\cite{UnV2010}, no additional convolution operations are required to compute the response of rotated filters.
 A steerable filter~\cite{FrA1991} is a filter that can be obtained as a linear combination of steerable kernels, and all rotations of the former can also be obtained via another linear combination of the filter responses parameterised by the desired rotation (\textit{e.g.} one rotation angle in 2$D$), which obviates the need to re-convolve the oriented filter with the input image.
-The formulae and directions for computing the steered Riesz coefficients are detailed in Section III-E of Chenouard \textit{et al.}~\cite{ChU2012}.
-To summarise, aligned Riesz filters allow directional and rotation-invariant image analysis that can characterise interpretable transitions in medical images.
-Rotationally-invariant steerable representations can also be learned to be specific to the problem at hand~\cite{Depeursinge2017,AFO2019}, also with CNNs~\cite{AFO2019,AFO2019b,WHS2018,Winkels2019,Weiler2018,bekkers2018roto}.
+In 2$D$, steering the kernel $\mathcal{R}_1$ using a rotation matrix 
+$\mathrm{U}_\theta
+=\begin{pmatrix} 
+\cos{\theta} & -\sin{\theta} \\
+\sin{\theta} & \cos{\theta} \\
+\end{pmatrix}
+$ can simply be obtained using
+$\mathcal{R}_1(\mathrm{U}_{\theta}\,\cdot)=\cos\theta\,\mathcal{R}_1(\cdot)+\sin\theta\,\mathcal{R}_2(\cdot)$, which only requires computing a linear combination parameterised by the rotation.
+This is illustrated in Fig.~\ref{fig:2dsteerability}.
+%
+\begin{figure}
+\centering
+\includegraphics[trim = 0 0 0 0, clip, width=0.5\linewidth]{2dsteerability.png}
+\caption{Illustration of the steerability property of the Riesz transform in 2$D$. Rotating the Riesz kernel $\mathcal{R}_1$ using a rotation matrix $\mathrm{U}_\theta$ only requires computing a linear combination~\cite{UnV2010}.}
+  \label{fig:2dsteerability}
+\end{figure}
+%
 
+More generally, rotating all elements of the Riesz transform can be obtained with the linear combination
+\begin{equation}\label{eq:steerability}
+    \boldsymbol{\mathcal{R}}\{f_{\mathrm{U}}\}=
+    \mathrm{S}_{\mathrm{U}}\boldsymbol{\mathcal{R}}\{f\},
+\end{equation}
+where $\mathrm{S}_{\mathrm{U}}$ is called the steering matrix corresponding to the rotation matrix $\mathrm{U}$.
+$\mathrm{S}_{\mathrm{U}}$ is a square matrix with a number of row/columns equal to the number of elements in the Riesz filterbank, see Eq.\eqref{eq:RieszTransformHigherOrder}.
+Let us detail the form of $\mathrm{S}_{\mathrm{U}}$ in the 3$D$ case, for a rotation matrix $\mathrm{U} = (\boldsymbol{u}_1,\boldsymbol{u}_2,\boldsymbol{u}_3)^T$ with $\boldsymbol{u}_i\in\mathbb{R}^3$.
+For the 2$D$ case, we refer to the Section II-E of Unser et al.~\cite{UnV2010}.
+To specifically define the elements of this steering matrix in the 3$D$ case, let us start with the introduction of the multi-index notation as used by Chenouard et al.~\cite{ChU2012}.
+We consider index vectors of the form $\boldsymbol{n} = (n_1, n_2, n_3) \in \mathbb{N}^3$. The following multi--index notations and operators are used:
+\begin{itemize}
+\item Sum of components: $|\boldsymbol{n}| = n_1+n_2+n_3$,
+\item Max of components: $\max(\boldsymbol{n}) = \max(n_1,n_2,n_3)$,
+\item Factorial: $\boldsymbol{n}! = n_1!n_2!n_3!$,
+\item Exponentiation of a vector $\boldsymbol{x} = (x_1, x_2, x_3) \in \mathbb{R}^3$: $\boldsymbol{x}^{\boldsymbol{n}}~=~x_1^{n_1}x_2^{n_2}x_3^{n_3}$.
+\end{itemize}
+%
+Using this multi-index notation, we can define the steering coefficients as elements $s_{\boldsymbol{n},\boldsymbol{m}}$ of the steering matrix $\mathrm{S}_{\mathrm{U}}$ in the following compact form (Section III-E of~\cite{ChU2012}): 
+%
+\begin{equation}\label{eq:steeringMatrix3D}
+s_{\boldsymbol{n},\boldsymbol{m}} = \sqrt{\frac{\boldsymbol{m}!}{\boldsymbol{n}!}}
+\sum_{\mid \boldsymbol{v}_1 \mid = n_1}{\sum_{\mid \boldsymbol{v}_2 \mid = n_2}{\sum_{\mid \boldsymbol{v}_3 \mid = n_3}{
+\delta_{\boldsymbol{v}_1 + \boldsymbol{v}_2 + \boldsymbol{v}_3,\boldsymbol{m}}}}}
+\cdot \frac{\boldsymbol{n}!}{\boldsymbol{v}_1!\boldsymbol{v}_2!\boldsymbol{v}_3!}
+\boldsymbol{u}_1^{\boldsymbol{v}_1}\boldsymbol{u}_2^{\boldsymbol{v}_2}\boldsymbol{u}_3^{\boldsymbol{v}_3}, \nonumber
+\end{equation}
+%
+where $\boldsymbol{v}_i \in \mathbb{N}^3$ and $\delta_{\boldsymbol{v}_1 + \boldsymbol{v}_2 + \boldsymbol{v}_3,\boldsymbol{m}}$ is the Kronecker symbol used to exclude the summation terms with $\boldsymbol{v}_1 + \boldsymbol{v}_2 + \boldsymbol{v}_3 \neq \boldsymbol{m}$.
 
-Implementations of the Riesz transform are available such as in~\cite{Her2016}$^($\footnote{\texttt{\url{https://pypi.org/project/itk-isotropicwavelets/}}, as of July 2019.}$^)$,~\cite{ChU2012}$^($\footnote{\texttt{\url{http://bigwww.epfl.ch/demo/steerable-wavelets-3d/}}, as of July 2019.}$^)$ and its adaptation for texture feature extraction, including filter alignment, in~\cite{DMP2017}$^($\footnote{\texttt{\url{http://publications.hevs.ch/index.php/publications/show/2035/}}, as of July 2019.}$^)$.
+Applying~\eqref{eq:steerability} at every image position will align the entire filterbank and yield aligned response maps $h_{\text{aligned}}[\boldsymbol{k}]$ allowing both directional and rotation-invariant image analysis.
 An example of image filtering in 2$D$ with the Riesz kernel $\mathcal{R}^{(0,2)}
 \{g_{\text{sim}}\}[\boldsymbol{k}]$ is shown in Fig.~\ref{fig:RieszExample}.
+It is worth noting that although being slightly sub-optimal from a computational aspect, bypassing steerability is possible. In that case, one need to rotate the Riesz kernels using $\mathrm{U}$ and interpolation, and then to (re-)convolve the image with the rotated kernels to obtain the aligned response maps $h_{\text{aligned}}[\boldsymbol{k}]$.
+
+To summarise, aligned Riesz filters allow directional and rotation-invariant image analysis that can characterise interpretable transitions in medical images.
+Rotationally-invariant steerable representations can also be learned to be specific to the problem at hand~\cite{Depeursinge2017,AFO2019}, also with CNNs~\cite{AFO2019,AFO2019b,WHS2018,Winkels2019,Weiler2018,bekkers2018roto}.
+%
+Implementations of the Riesz transform are available, e.g. in~\cite{Her2016}$^($\footnote{\texttt{\url{https://pypi.org/project/itk-isotropicwavelets/}}, as of July 2019.}$^)$,~\cite{ChU2012}$^($\footnote{\texttt{\url{http://bigwww.epfl.ch/demo/steerable-wavelets-3d/}}, as of July 2019.}$^)$ and its adaptation for texture feature extraction, including filter alignment, in~\cite{DMP2017}$^($\footnote{\texttt{\url{http://publications.hevs.ch/index.php/publications/show/2035/}}, as of July 2019.}$^)$.
 
 %
 \begin{figure}
@@ -1839,7 +1976,7 @@ In addition, a consensus is defined as the average cluster (centroid in $\mathbb
 A visualisation of the first two PCA components allows assessing the distribution and dispersion of the submissions and the consensus. 
 In addition, a boxplot is proposed to visualise the distribution of the  distances to the consensus in $\mathbb{R}^{64\times64\times64}$ and to suggest outliers.
 An example of comparison of 120 simulated response maps is shown in Fig.~\ref{fig:responseMapComparison}.
-
+\marginnote{\footnotesize v6: Added boundary condition for Simoncelli filters (configurations 8.a.1 - 3).}
 \small
 \begin{longtable}{cp{3cm}cp{7.7cm}}
 
@@ -2052,18 +2189,21 @@ An example of comparison of 120 simulated response maps is shown in Fig.~\ref{fi
     8.a.1 & Simoncelli & checkerboard & 
     \begin{minipage}[t]{\linewidth}
     \begin{itemize}[nosep,after=\strut,leftmargin=*]
+        \item periodic padding
         \item 3$D$ filter, B map -- 1\textsuperscript{st} level
     \end{itemize}
     \end{minipage} \\ \cline{4-4}     
     8.a.2 & & & 
     \begin{minipage}[t]{\linewidth}
     \begin{itemize}[nosep,after=\strut,leftmargin=*]
+        \item periodic padding
         \item 3$D$ filter, B map -- 2\textsuperscript{nd} level
     \end{itemize}
     \end{minipage} \\ \cline{4-4}       
     8.a.3 & & & 
     \begin{minipage}[t]{\linewidth}
     \begin{itemize}[nosep,after=\strut,leftmargin=*]
+        \item periodic padding
         \item 3$D$ filter, B map -- 3\textsuperscript{rd} level
     \end{itemize}
     \end{minipage} \\    
@@ -2170,8 +2310,7 @@ image filters & & \\
 \bottomrule
 \end{tabular}
 \normalsize
-\caption{Image processing configurations for obtaining reference values for intensity-based statistical features and Intensity Histogram (IH) features after image filtering in the lung cancer CT image. The different processing steps are described in the IBSI reference manual~\cite{Zwanenburg2020-jt}. Note that the image should not be cropped. Also note the use of a higher order (spline) resampling method instead of linear interpolation. ROI: Region Of Interest; HU: Hounsfield Unit.}
-% \newline \textsuperscript{a} Fixed bin size cannot be used with most image filters, as intensities in response maps may no longer represent calibrated intensities.}
+\caption{Image processing configurations for obtaining reference values for intensity-based statistical features after image filtering in the lung cancer CT image. The different processing steps are described in the IBSI reference manual~\cite{Zwanenburg2020-jt}. Note that the image should not be cropped. Also note the use of a higher order (spline) resampling method instead of linear interpolation. ROI: Region Of Interest; HU: Hounsfield Unit.}
 \label{tab:lung_ct_image_processing_configurations}
 \end{table}
 
@@ -2352,49 +2491,24 @@ Only part of the radiomics features standardised previously need to be reported.
 These features are listed below with their permanent identifiers.
 
 \begin{enumerate}
-    % \item Intensity-based statistical features (\textid{UHIW})
-    % \begin{enumerate}
-        \item Mean intensity (\textid{Q4LE})
-        \item Intensity variance (\textid{ECT3})
-        \item Intensity skewness (\textid{KE2A})
-        \item (Excess) intensity kurtosis (\textid{IPH6})
-        \item Median intensity (\textid{Y12H})
-        \item Minimum intensity (\textid{1GSF})
-        \item 10\textsuperscript{th} intensity percentile (\textid{QG58})
-        \item 90\textsuperscript{th} intensity percentile (\textid{8DWT})
-        \item Maximum intensity (\textid{84IY})
-        \item Intensity interquartile range (\textid{SALO})
-        \item Intensity range (\textid{2OJQ})
-        \item Intensity-based mean absolute deviation (\textid{4FUA})
-        \item Intensity-based robust mean absolute deviation (\textid{1128})
-        \item Intensity-based median absolute deviation (\textid{N72L})
-        \item Intensity-based coefficient of variation (\textid{7TET})
-        \item Intensity-based quartile coefficient of dispersion (\textid{9S40})
-        \item Intensity-based energy (\textid{N8CA})
-        \item Root mean square intensity (\textid{5ZWQ})
-    % \end{enumerate}
-    % \item Intensity histogram features (\textid{ZVCW})
-    % \begin{enumerate}
-    %     \item Mean discretised intensity (\textid{X6k6})
-    %     \item Discretised intensity variance (\textid{CH89})
-    %     \item Discretised intensity skewness (\textid{88K1})
-    %     \item (Excess) discretised intensity kurtosis (\textid{C3I7})
-    %     \item Median discretised intensity (\textid{WIFQ})
-    %     \item Minimum discretised intensity (\textid{1PR8})
-    %     \item 10\textsuperscript{th} discretised intensity percentile (\textid{GPMT})
-    %     \item 90\textsuperscript{th} discretised intensity percentile (\textid{OZ0C})
-    %     \item Maximum discretised intensity (\textid{3NCY})
-    %     \item Intensity histogram mode (\textid{AMMC})
-    %     \item Discretised intensity interquartile range (\textid{WR0O})
-    %     \item Discretised intensity range (\textid{5Z3W})
-    %     \item Intensity histogram mean absolute deviation (\textid{D2ZX})
-    %     \item Intensity histogram robust mean absolute deviation (\textid{WRZB})
-    %     \item Intensity histogram median absolute deviation (\textid{4RNL})
-    %     \item Intensity histogram coefficient of variation (\textid{CWYJ})
-    %     \item Intensity histogram quartile coefficient of dispersion (\textid{SLWD})
-    %     \item Discretised intensity entropy (\textid{TLU2})
-    %     \item Discretised intensity uniformity (\textid{BJ5W})
-    % \end{enumerate}
+    \item Mean intensity (\textid{Q4LE})
+    \item Intensity variance (\textid{ECT3})
+    \item Intensity skewness (\textid{KE2A})
+    \item (Excess) intensity kurtosis (\textid{IPH6})
+    \item Median intensity (\textid{Y12H})
+    \item Minimum intensity (\textid{1GSF})
+    \item 10\textsuperscript{th} intensity percentile (\textid{QG58})
+    \item 90\textsuperscript{th} intensity percentile (\textid{8DWT})
+    \item Maximum intensity (\textid{84IY})
+    \item Intensity interquartile range (\textid{SALO})
+    \item Intensity range (\textid{2OJQ})
+    \item Intensity-based mean absolute deviation (\textid{4FUA})
+    \item Intensity-based robust mean absolute deviation (\textid{1128})
+    \item Intensity-based median absolute deviation (\textid{N72L})
+    \item Intensity-based coefficient of variation (\textid{7TET})
+    \item Intensity-based quartile coefficient of dispersion (\textid{9S40})
+    \item Intensity-based energy (\textid{N8CA})
+    \item Root mean square intensity (\textid{5ZWQ})
 \end{enumerate}
 
 In addition some diagnostic features may be reported. Configurations A and B are similar to those used in IBSI 1. However the use of a higher order interpolation method precludes the direct use of diagnostic features from the previous work. Most features are based on the ROI intensity mask after interpolation and re-segmentation, since these features will be different from those previously established:
@@ -2405,6 +2519,105 @@ In addition some diagnostic features may be reported. Configurations A and B are
     \item Maximal intensity in the ROI intensity mask after interpolation and re-segmentation.
     \item Minimal intensity in the ROI intensity mask after interpolation and re-segmentation.
 \end{enumerate}
+
+\section{Phase 3: Validation}\label{sec:validationPhase}
+\marginnote{\footnotesize v6: Introduced section on the validation phase. v7 updated configurations}
+The aim of phase 3 is to assess reproducibility of features computed from response maps. We will use a co-registered multi-modality imaging dataset of 51 patients with soft-tissue sarcoma \cite{Vallieres2015-hv,Vallieres2015-tf}, see the \texttt{data\_sets} GitHub repository \footnote{\url{https://github.com/theibsi/data_sets/tree/master/ibsi_validation}}. The images, consisting of CT, 18F-FDG-PET and T1-weighted MR imaging, are preprocessed as follows.
+
+Counts data in PET imaging was converted to body-weight corrected SUV and cropped to 50 mm around the GTV region of interest.
+
+T1-weighted MR images were corrected using the N4-bias field correction algorithm \cite{Tustison2010-zb}. A simple threshold was manually determined to create a patient segmentation mask that excludes air voxels. The N4 algorithm was parameterised to use 3 fitting levels, a maximum of 100 iterations at each level, a convergence threshold of 0.001 and to utilise the patient mask. After bias-field correction, MR images were normalised by mapping intensities to a standard range to improve comparability between different patients. The lower end of the range was set to correspond to air. The upper end of the range was set to the 95\textsuperscript{th} percentile of the intensities within the patient mask, corresponding roughly to subcutaneous fat. This range was then used to linearly map voxel intensities with 0 (air) and 1000 (subcutaneous fat) as anchor points. The images were subsequently cropped to 50 mm around the GTV and stored as integer values for DICOM compliance.
+
+CT images were cropped to 50 mm around the GTV, but did not undergo additional processing.
+
+\subsection{Computing response maps and features for validation}
+
+The validation phase, in concept, mostly follows phase 2, but for more images. Prior to creating the response map, images are processed using the parameters listed in Table \ref{tab:validation_image_processing_configurations}. Response maps are then created using the parameters detailed in Table \ref{tab:validation_image_filter_configurations}. These response maps are then used to compute the same statistical features as listed in Section \ref{sec:radiomicsfeaturesbenchmarking}. Computing diagnostic features is not necessary.
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{lccc}
+\toprule
+\textbf{Parameter} & \textbf{CT} & \textbf{MR} & \textbf{PET}\\
+\midrule
+slice-wise (2$D$) or as volume (3$D$) & 3$D$ & 3$D$ & 3$D$\\
+interpolation & yes & yes & yes\\
+\quad resampled voxel spacing (mm) & $1 \times 1 \times 1$ & $1 \times 1 \times 1$ & $3 \times 3 \times 3$\\
+\quad interpolation method & tricubic spline & tricubic spline & tricubic spline\\
+\quad intensity rounding & nearest integer & --- & --- \\
+\quad ROI interpolation method & trilinear & trilinear & trilinear\\
+\quad ROI partial mask volume & $0.5$ & $0.5$ & $0.5$\\
+re-segmentation & & \\
+\quad range (HU) & $[-200, 200]$ &  $[0, \infty)$ & $[0, \infty)$\\
+\quad outlier filtering & none & none & none\\
+image filters & & \\
+\quad filters & see Table \ref{tab:validation_image_filter_configurations} & see Table \ref{tab:validation_image_filter_configurations} & see Table \ref{tab:validation_image_filter_configurations}\\
+\quad boundary condition & mirror & mirror & mirror\\
+\bottomrule
+\end{tabular}
+\normalsize
+\caption{Image processing configurations for the validation phase. The different processing steps are described in the IBSI reference manual~\cite{Zwanenburg2020-jt}. Note that the image should not be cropped. Also note the use of a higher order (spline) resampling method instead of linear interpolation. ROI: Region Of Interest.}
+\label{tab:validation_image_processing_configurations}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \small
+    \begin{tabular}{cp{3cm}p{7.5cm}}
+    \toprule
+    \textbf{ID} & \textbf{Filter} & \textbf{Filter parameters} \\
+    \midrule
+    1 & none & \textendash \\ \hline
+    2 & mean & 3$D$ filter, support \(M=3\) voxels \\ \hline
+    3 & LoG & 3$D$ filter, scale \(\sigma^*=3.0\) mm, filter size cutoff \(4\sigma\) \\ \hline
+    4 & Laws & 
+    \begin{minipage}[t]{\linewidth}
+    \begin{itemize}[nosep,after=\strut,leftmargin=*]
+        \item 3$D$ filter, S5E5L5 response map
+        \item 3$D$ rotation invariance, \texttt{max} pooling
+        \item  energy map, distance $\delta = 5$ voxels
+    \end{itemize}
+    \end{minipage} \\ \hline
+    5 & Gabor & 
+    \begin{minipage}[t]{\linewidth}
+    \begin{itemize}[nosep,after=\strut,leftmargin=*]
+        \item 2$D$ modulus response map
+        \item \(\sigma^*=3\) mm, \(\lambda^*=3\) mm, \(\gamma=1\), \(\theta=-5\pi/8\)
+    \end{itemize}
+    \end{minipage} \\ \hline
+    6 & Coiflet 3 & 
+    \begin{minipage}[t]{\linewidth}
+    \begin{itemize}[nosep,after=\strut,leftmargin=*]
+        \item 3$D$ filter, undecimated LHH map -- 1\textsuperscript{st} level
+        \item 3$D$ rotation invariance, \texttt{average} pooling
+    \end{itemize}
+    \end{minipage} \\ \hline
+    7 & Coiflet 3 &
+    \begin{minipage}[t]{\linewidth}
+    \begin{itemize}[nosep,after=\strut,leftmargin=*]
+        \item 3$D$ filter, undecimated HHH map -- 2\textsuperscript{nd} level
+        \item 3$D$ rotation invariance, \texttt{max} pooling
+    \end{itemize}
+    \end{minipage} \\ \hline
+    8 & Simoncelli &
+    \begin{minipage}[t]{\linewidth}
+    \begin{itemize}[nosep,after=\strut,leftmargin=*]
+        \item 3$D$ filter, B map -- 1\textsuperscript{st} level
+    \end{itemize}
+    \end{minipage} \\  \hline
+    9 & Simoncelli &
+    \begin{minipage}[t]{\linewidth}
+    \begin{itemize}[nosep,after=\strut,leftmargin=*]
+        \item 3$D$ filter, B map -- 2\textsuperscript{nd} level
+    \end{itemize}
+    \end{minipage} \\
+    \bottomrule
+    \end{tabular}
+    \normalsize
+    \caption{Filters and parameters for validation.}
+    \label{tab:validation_image_filter_configurations}
+\end{table}
 
 \chapter{Conclusion}
 In this document we detail various convolutional image filters to standardise their implementation in radiomics software. Such filters are used to convert medical images into response maps that emphasise characteristics such as edges, blobs or directional structures. Quantifying such characteristics using standardised radiomics software will open the way to their reproducible assessment and validation, and their translation from bench to bedside.
