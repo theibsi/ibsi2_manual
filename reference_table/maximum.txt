@@ -1,0 +1,35 @@
+\centering
+\small
+% latex table generated in R 4.2.1 by xtable 1.8-4 package
+% Mon Mar 13 17:23:11 2023
+\begin{tabular}{cccc}
+  \toprule
+{\textbf{filter ID}} & {\textbf{value}} & {\textbf{tol.}} & {\textbf{consensus}} \\ 
+  \midrule
+1.A &  377 &   10 & strong \\ 
+  1.B &  377 &   15 & strong \\ 
+  2.A &  334 &    7 & strong \\ 
+  2.B &  316 &    7 & very strong \\ 
+  3.A &  191 &    1 & strong \\ 
+  3.B &  204 &    1 & strong \\ 
+  4.A &  672 &    4 & strong \\ 
+  4.B &  525 &    1 & strong \\ 
+  5.A &  354 &    5 & strong \\ 
+  5.B &  175 &    3 & strong \\ 
+  6.A &  202 &    2 & strong \\ 
+  6.B &  155 &    1 & strong \\ 
+  7.A &  352 &    4 & strong \\ 
+  7.B &  201 &    4 & strong \\ 
+  8.A &  408 &    3 & moderate \\ 
+  8.B &  374 &    3 & strong \\ 
+  9.A &  470 &    6 & moderate \\ 
+  9.B &  471 &   13 & moderate \\ 
+  10.A & \textemdash & \textemdash & none \\ 
+  10.B & \textemdash & \textemdash & weak \\ 
+  11.A & \textemdash & \textemdash & none \\ 
+  11.B & \textemdash & \textemdash & none \\ 
+   \bottomrule
+\end{tabular}
+
+\captionof{table}{Reference values for the \textit{maximum} feature.}
+\label{tab:maximum}

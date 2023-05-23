@@ -1,0 +1,35 @@
+\centering
+\small
+% latex table generated in R 4.2.1 by xtable 1.8-4 package
+% Mon Mar 13 17:23:11 2023
+\begin{tabular}{cccc}
+  \toprule
+{\textbf{filter ID}} & {\textbf{value}} & {\textbf{tol.}} & {\textbf{consensus}} \\ 
+  \midrule
+1.A & $-1 \times 10^{3}$ &   10 & strong \\ 
+  1.B & $-$997 &    3 & strong \\ 
+  2.A & $-$889 &    3 & strong \\ 
+  2.B & $-$906 &    5 & very strong \\ 
+  3.A & $-$178 &    1 & strong \\ 
+  3.B & $-$173 &    5 & strong \\ 
+  4.A & 15.5 &  0.1 & strong \\ 
+  4.B & 28.5 &  0.1 & strong \\ 
+  5.A & 31.4 &  0.5 & strong \\ 
+  5.B & 9.53 & 0.11 & strong \\ 
+  6.A & $-$245 &    2 & strong \\ 
+  6.B & $-$148 &    1 & strong \\ 
+  7.A & $-$349 &    7 & strong \\ 
+  7.B & $-$203 &    3 & strong \\ 
+  8.A & $-$395 &    3 & moderate \\ 
+  8.B & $-$411 &    5 & moderate \\ 
+  9.A & $-$535 &    1 & moderate \\ 
+  9.B & $-$605 &    2 & moderate \\ 
+  10.A & \textemdash & \textemdash & none \\ 
+  10.B & \textemdash & \textemdash & weak \\ 
+  11.A & \textemdash & \textemdash & none \\ 
+  11.B & \textemdash & \textemdash & none \\ 
+   \bottomrule
+\end{tabular}
+
+\captionof{table}{Reference values for the \textit{minimum} feature.}
+\label{tab:minimum}

@@ -1,0 +1,35 @@
+\centering
+\small
+% latex table generated in R 4.2.1 by xtable 1.8-4 package
+% Mon Mar 13 17:23:11 2023
+\begin{tabular}{cccc}
+  \toprule
+{\textbf{filter ID}} & {\textbf{value}} & {\textbf{tol.}} & {\textbf{consensus}} \\ 
+  \midrule
+1.A & 64.4 &  5.8 & strong \\ 
+  1.B & 63.6 &  7.3 & very strong \\ 
+  2.A & 67.7 &  5.6 & strong \\ 
+  2.B & 68.1 &  6.9 & very strong \\ 
+  3.A & 4.98 & 0.16 & strong \\ 
+  3.B & 6.37 & 0.19 & strong \\ 
+  4.A & 92.9 &  1.8 & strong \\ 
+  4.B & 75.9 &  1.4 & strong \\ 
+  5.A & 15.8 &  0.2 & strong \\ 
+  5.B & 7.31 & 0.06 & strong \\ 
+  6.A & 6.82 & 0.08 & strong \\ 
+  6.B & 4.21 & 0.09 & strong \\ 
+  7.A &   13 &  0.2 & strong \\ 
+  7.B &  7.2 &  0.1 & strong \\ 
+  8.A & 11.1 &  0.2 & moderate \\ 
+  8.B & 11.7 &  0.3 & strong \\ 
+  9.A & 17.6 &  0.5 & moderate \\ 
+  9.B &   21 &  0.5 & moderate \\ 
+  10.A & \textemdash & \textemdash & none \\ 
+  10.B & \textemdash & \textemdash & weak \\ 
+  11.A & \textemdash & \textemdash & none \\ 
+  11.B & \textemdash & \textemdash & none \\ 
+   \bottomrule
+\end{tabular}
+
+\captionof{table}{Reference values for the \textit{robust mean absolute deviation} feature.}
+\label{tab:robust_mean_absolute_deviation}

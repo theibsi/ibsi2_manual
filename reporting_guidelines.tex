@@ -1,0 +1,232 @@
+\newcounter{itemcounter}
+\newcounter{subitemcounter}[itemcounter]
+
+\newcommand\stepitemcounter{\stepcounter{itemcounter}\theitemcounter}
+\newcommand\startsubitemcounter{\stepcounter{itemcounter}\stepcounter{subitemcounter}\theitemcounter\alph{subitemcounter}}
+\newcommand\stepsubitemcounter{\stepcounter{subitemcounter}\theitemcounter\alph{subitemcounter}}
+
+\footnotesize
+\begin{longtable}{p{3.5cm}ccp{7cm}}
+
+\toprule
+\textbf{topic} & & \textbf{item} & \textbf{description}\\
+\midrule
+\endhead
+
+\bottomrule
+\multicolumn{4}{r}{\textit{continued on next page}}
+\endfoot
+
+\bottomrule
+\caption[Reporting guidelines]{Guidelines for reporting on radiomics studies. Not all items may be applicable.} \label{table_guidelines}
+\endlastfoot
+
+\multicolumn{4}{l}{\textbf{Patient}}\\
+\midrule
+Region of interest\footnote{Also referred to as volume of interest.} & &
+\stepitemcounter & Describe the region of interest that is being imaged.\\
+%
+Patient preparation & & \startsubitemcounter & Describe specific instructions given to patients prior to image acquisition, e.g. fasting prior to imaging.\\
+& & \stepsubitemcounter & Describe administration of drugs to the patient prior to image acquisition, e.g. muscle relaxants. \\
+& & \stepsubitemcounter & Describe the use of specific equipment for patient comfort during scanning, e.g. ear plugs. \\
+%
+Radioactive tracer & PET, SPECT & \startsubitemcounter & Describe which radioactive tracer was administered to the patient, e.g. 18F-FDG. \\
+& PET, SPECT & \stepsubitemcounter & Describe the administration method. \\
+& PET, SPECT & \stepsubitemcounter & Describe the injected activity of the radioactive tracer at administration. \\
+& PET, SPECT & \stepsubitemcounter & Describe the uptake time prior to image acquisition.\\
+& PET, SPECT & \stepsubitemcounter & Describe how competing substance levels were controlled.\footnote{An example is glucose present in the blood which competes with the uptake of 18F-FDG tracer in tumour tissue. To reduce competition with the tracer, patients are usually asked to fast for several hours and a blood glucose measurement may be conducted prior to tracer administration.} \\
+%
+Contrast agent & & \startsubitemcounter & Describe which contrast agent was administered to the patient. \\
+& & \stepsubitemcounter & Describe the administration method. \\
+& & \stepsubitemcounter & Describe the injected quantity of contrast agent.\\
+& & \stepsubitemcounter & Describe the uptake time prior to image acquisition.\\
+& & \stepsubitemcounter & Describe how competing substance levels were controlled.\\
+%
+Comorbidities & & \stepitemcounter & Describe if the patients have comorbidities that affect imaging.\footnote{An example of a comorbidity that may affect image quality in 18F-FDG PET scans are type I and type II diabetes melitus, as well as kidney failure.} \\
+%
+\multicolumn{4}{l}{\textbf{Acquisition}\footnote{Many acquisition parameters may be extracted from DICOM header meta-data, or calculated from them.}}\\
+\midrule
+%
+Acquisition protocol & & \stepitemcounter & Describe whether a standard imaging protocol was used, and where its description may be found.\\
+%
+Scanner type & & \stepitemcounter & Describe the scanner type(s) and vendor(s) used in the study. \\
+%
+Imaging modality & & \stepitemcounter & Clearly state the imaging modality that was used in the study, e.g. CT, MRI. \\
+%
+Scanner calibration & & \stepitemcounter & Describe how and when the scanner was calibrated. \\
+%
+Acquisition type & & \startsubitemcounter & State if the scans were static, dynamic or gated, if this could be unclear.\\
+& dynamic & \stepsubitemcounter & Describe the acquisition time per time frame.\\
+& dynamic & \stepsubitemcounter & Describe any temporal modelling technique that was used.\\
+& gated & \stepsubitemcounter & Describe what signal is used for gated acquisition.\\
+%
+Scan duration & & \stepitemcounter & Describe the duration of the complete scan or the time per bed position. \\
+%
+Patient instructions & & \stepitemcounter & Describe specific instructions given to the patient during acquisition, e.g. breath holding.\\
+%
+Anatomical motion correction & & \stepitemcounter & Describe the method used to minimise the effect of anatomical motion. \\
+%
+Tube voltage & CT & \stepitemcounter & Describe the peak kilo voltage output of the X-ray source.\\
+%
+Tube current & CT & \startsubitemcounter & Describe the tube current in mA.\\
+& CT & \stepsubitemcounter & Describe the technique used to beam modulate intensity, if any.\\
+& CT & \stepsubitemcounter & Describe the average exposure in the region of interest.\\
+%
+Spectral CT technique & spectral CT & \stepitemcounter & Describe the technique used to acquire spectral CT imaging.\\
+%
+Time-of-flight & PET & \startsubitemcounter & State if scanner time-of-flight capabilities are used during acquisition. \\
+& PET & \stepsubitemcounter & Describe the temporal resolution of the scanner.\\
+%
+Collimator & SPECT & \stepitemcounter & Describe the type of collimator used on the detector\\
+%
+Magnetic field strength & MRI & \stepitemcounter & Describe the nominal strength of the main magnetic field, e.g 1.5T.\\
+%
+RF coil & MRI & \stepitemcounter & Describe what kind RF coil used for acquisition, e.g. body coil, incl. vendor. \\
+%
+Acquisition type & MRI & \stepitemcounter & Describe the acquisition type of the MRI scan, e.g. 2D, 3D, parallel.\\
+%
+Scanning sequence & MRI & \startsubitemcounter & Describe which scanning sequence was acquired.\\
+& MRI & \stepsubitemcounter & Describe which sequence variant was acquired.\\
+& MRI & \stepsubitemcounter & Describe which scan options apply to the current sequence, e.g. flow compensation, cardiac gating, etc.\\
+& MRI & \stepsubitemcounter & Describe the repetition time in ms between subsequent pulse sequences.\\
+& MRI & \stepsubitemcounter & Describe the echo time in ms.\\
+& MRI & \stepsubitemcounter & Describe the inversion time in ms between the middle of the inverting RF pulse to the middle of the excitation pulse, if applicable.\\
+& MRI & \stepsubitemcounter & Describe the flip angle produced by the RF pulses, if applicable.\\
+& MRI & \stepsubitemcounter & Describe the acquisition trajectory of the k-space, if other than linear.\\
+& MRI & \stepsubitemcounter & Describe the number of times each point in k-space is sampled, if more than once.\\
+& MRI & \stepsubitemcounter & Describe the number of lines or traversals in k-space that are acquired per RF excitation pulse, if more than 1.\\
+%
+\multicolumn{4}{l}{\textbf{Reconstruction}\footnote{Many reconstruction parameters may be extracted from DICOM header meta-data.}}\\
+\midrule
+Resolution & & \startsubitemcounter & Describe the distance between pixels/voxels in the axial plane, or alternatively the field of view and matrix size.\\
+& & \stepsubitemcounter & Describe the distance between pixels/voxels along the axial direction, e.g. the slice spacing.\\
+%
+CT reconstruction & CT & \startsubitemcounter & Describe the convolution kernel used to reconstruct the image.\\
+& CT & \stepsubitemcounter & Describe settings pertaining to iterative reconstruction algorithms.\\
+& CT & \stepsubitemcounter & Describe artefact-reduction techniques used for e.g. beam hardening artefacts, metal artefacts, partial volume effects.\\
+%
+PET/SPECT reconstruction & PET, SPECT & \startsubitemcounter & Describe which reconstruction method was used, e.g. 3D OSEM.\\
+& PET, SPECT & \stepsubitemcounter & Describe the number of iterations and subsets for iterative reconstruction.\\
+& PET, SPECT & \stepsubitemcounter & Describe if and how point-spread function modelling was performed.\\
+%
+PET/SPECT image corrections & PET, SPECT & \startsubitemcounter & Describe if and how attenuation correction was performed.\\
+& PET, SPECT & \stepsubitemcounter & Describe if and how scatter correction was performed.\\
+& PET, SPECT & \stepsubitemcounter & Describe if and how other forms of correction were performed, e.g. randoms correction, dead time correction etc.\\
+%
+MRI reconstruction method & MRI & \startsubitemcounter & Describe the reconstruction method used to reconstruct the image from the k-space information, if not obvious.\\
+& MRI & \stepsubitemcounter & Describe any artifact suppression methods used during reconstruction to suppress artifacts due to undersampling of k-space.\\
+%
+Diffusion-weighted imaging & DWI-MRI & \stepitemcounter & Describe the b-values used for diffusion-weighting. \\
+%
+\multicolumn{4}{l}{\textbf{Image registration}}\\
+\midrule
+Registration method & & \stepitemcounter & Describe the method used to register multi-modality imaging. \\
+%
+\multicolumn{4}{l}{\textbf{Image processing - data conversion}} \\
+\midrule
+SUV normalisation & PET & \stepitemcounter & Describe which standardised uptake value (SUV) normalisation method is used.\\
+%
+ADC computation & DWI-MRI & \stepitemcounter & Describe how apparent diffusion coefficient (ADC) values were calculated.\\
+%
+Other data conversions & & \stepitemcounter & Describe any other conversions that are performed to generate e.g. perfusion maps.\\
+%
+\multicolumn{4}{l}{\textbf{Image processing - post-acquisition processing}} \\
+\midrule
+Anti-aliasing & & \stepitemcounter & Describe the method used to deal with anti-aliasing when down-sampling during interpolation.\\
+%
+Noise suppression & & \stepitemcounter & Describe methods used to reduce image noise.\\
+%
+Post-reconstruction smoothing filter & PET & \stepitemcounter & Describe the width of the Gaussian filter (FWHM) to spatially smooth intensities.\\
+%
+Skull stripping & MRI (brain) & \stepitemcounter & Describe method used to perform skull stripping.\\
+%
+Non-uniformity correction\footnote{Also known as bias-field correction.} & MRI & \stepitemcounter & Describe the method and settings used to perform non-uniformity correction.\\
+%
+Intensity normalisation & & \stepitemcounter & Describe the method and respective parameters used to normalise intensity distributions within a patient or patient cohort, if applicable.\\
+%
+Augmentation/perturbation methods & & \stepitemcounter & Describe method and respective parameters used to augment and/or perturb images and ROI masks.\\
+%
+Other post-acquisition processing methods & & \stepitemcounter & Describe any other methods that were used to process the image and are not mentioned separately in this list.\\
+%
+\multicolumn{4}{l}{\textbf{Segmentation}} \\
+\midrule
+Segmentation method & & \startsubitemcounter & Describe according to which guidelines regions of interest were segmented.\\
+& & \stepsubitemcounter & Describe how regions of interest were segmented, e.g. manually.\\
+& & \stepsubitemcounter & Describe any details concerning the region of interest that may not be obvious, e.g. the segmented gross tumour volume did not include grossly involved lymph nodes.\\
+& & \stepsubitemcounter & Describe the number of experts, their expertise and consensus strategies for manual delineation.\\
+& & \stepsubitemcounter & Describe methods and settings used for semi-automatic and fully automatic segmentation.\\
+& & \stepsubitemcounter & Describe which image was used to define segmentation in case of multi-modality imaging.\\
+%
+Conversion to mask & & \stepitemcounter & Describe the method used to convert polygonal or mesh-based segmentations to a voxel-based mask.\\
+%
+\multicolumn{4}{l}{\textbf{Image processing - image interpolation}} \\
+\midrule
+Interpolation method & & \startsubitemcounter & Describe which interpolation algorithm was used to interpolate the image.\\
+& & \stepsubitemcounter & Describe how the position of the interpolation grid was defined, e.g. align by center.\\
+& & \stepsubitemcounter & Describe how the dimensions of the interpolation grid were defined, e.g. rounded to nearest integer.\\
+& & \stepsubitemcounter & Describe how extrapolation beyond the original image was handled.\\
+%
+Voxel dimensions & & \stepitemcounter & Describe the size of the interpolated voxels.\\
+%
+Intensity rounding & CT & \stepitemcounter & Describe how fractional Hounsfield Units are rounded to integer values after interpolation.\\
+%
+\multicolumn{4}{l}{\textbf{Image processing - ROI interpolation}} \\
+\midrule
+Interpolation method & & \stepitemcounter & Describe which interpolation algorithm was used to interpolate the region of interest mask.\\
+%
+Partially masked voxels & & \stepitemcounter & Describe how partially masked voxels after interpolation are handled.\\
+%
+\multicolumn{4}{l}{\textbf{Image processing - re-segmentation}} \\
+\midrule
+Re-segmentation methods & & \stepitemcounter & Describe which methods and settings are used to re-segment the ROI intensity mask.\\
+%
+\multicolumn{4}{l}{\textbf{Image processing - discretisation}} \\
+\midrule
+Discretisation method\footnote{Discretisation may be performed separately to create intensity-volume histograms. If this is indeed the case, this should be described as well.} & & \startsubitemcounter & Describe the method used to discretise image intensities.\\
+& & \stepsubitemcounter & Describe the number of bins (FBN) or the bin size (FBS) used for discretisation, if applicable.\\
+& & \stepsubitemcounter & Describe the lowest intensity in the first bin for FBS discretisation.\footnote{This is typically set by range re-segmentation.}\\
+%
+\multicolumn{4}{l}{\textbf{Image processing - image transformation}} \\
+\midrule
+Image filters & & \startsubitemcounter & Describe which transformations are performed, if any.\\
+& & \stepsubitemcounter & Describe if the image transformation was applied after interpolation or before. \footnote{Note that, generally, interpolation should be performed prior to transformation to ensure that spatial frequency response is the same for all relevant image directions. Only some filters allow for defining spatial response directly, e.g. Gaussian. In such cases, interpolation is not strictly required.}\\
+& & \stepsubitemcounter & Describe transformation-specific parameters.\\
+& & \stepsubitemcounter & Describe which features were computed from the response map.\\
+%
+IBSI compliance & & \stepitemcounter & State if the software used to perform the image transformation is able to reproduce the IBSI reference response maps and reference feature values for the relevant image filters.\\
+%
+\multicolumn{4}{l}{\textbf{Feature computation}} \\
+\midrule
+Feature set & & \stepitemcounter & Describe which hand-crafted features are computed, and refer to their definitions or provide these.\\
+%
+Texture parameters & & \startsubitemcounter & Define how texture-matrix based features were aggregated from underlying texture matrices.\\
+& & \stepsubitemcounter & Define how CM, RLM, NGTDM and NGLDM weight distances, e.g. no weighting.\\
+& & \stepsubitemcounter & Define whether symmetric or asymmetric co-occurrence matrices were computed.\\
+& & \stepsubitemcounter & Define the (Chebyshev) distance at which co-occurrence of intensities is determined for co-occurrence matrices, e.g. 1.\\
+& & \stepsubitemcounter & Define the distance and distance norm for which voxels with the same intensity are considered to belong to the same zone for the purpose of constructing an SZM and/or DZM, e.g. Chebyshev distance of 1.\\
+& & \stepsubitemcounter & Define the distance norm for determining the distance of zones to the border of the ROI, e.g. Manhattan distance.\\
+& & \stepsubitemcounter & Define the neighbourhood distance and distance norm for the NGTDM and/or NGLDM, e.g. Chebyshev distance of 1.\\
+& & \stepsubitemcounter & Define the coarseness parameter for the NGLDM, e.g. 0.\\
+%
+IBSI compliance & & \stepitemcounter & State if the software used to extract the set of image biomarkers is able to reproduce the IBSI feature reference values.\\
+%
+\multicolumn{4}{l}{\textbf{Machine learning and radiomics analysis}} \\
+\midrule
+Diagnostic and prognostic modelling & & \stepitemcounter & See the TRIPOD guidelines for reporting on diagnostic and prognostic modelling.\\
+%
+Robustness & & \stepitemcounter & Describe how robustness of the features was assessed, e.g. test-retest analysis.\\
+%
+Comparison with known factors & & \stepitemcounter & Describe performance of radiomics models when compared with known (clinical) factors.\\
+%
+Multicollinearity & & \stepitemcounter & Describe multicollinearity between image features in the model signature.\\
+%
+Model availability & & \stepitemcounter & Describe where radiomics models with the necessary pre-processing information may be found. \\
+%
+Data availability & & \stepitemcounter & Describe where imaging data and relevant meta-data used in the study may be found.\\
+%
+Software & & \stepitemcounter & Describe which software and version was used to perform image processing, image filters, computation of hand-crafted features, and modelling.\\
+%
+\end{longtable}
+
+\normalsize
+\FloatBarrier

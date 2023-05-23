@@ -1,0 +1,35 @@
+\centering
+\small
+% latex table generated in R 4.2.1 by xtable 1.8-4 package
+% Mon Mar 13 17:23:11 2023
+\begin{tabular}{cccc}
+  \toprule
+{\textbf{filter ID}} & {\textbf{value}} & {\textbf{tol.}} & {\textbf{consensus}} \\ 
+  \midrule
+1.A & $-$434 &   21 & strong \\ 
+  1.B & $-$427 &   29 & very strong \\ 
+  2.A & $-$402 &   18 & strong \\ 
+  2.B & $-$389 &   25 & very strong \\ 
+  3.A & $-$27.1 &  0.5 & strong \\ 
+  3.B & $-$32.2 &  0.5 & strong \\ 
+  4.A & 26.9 &  0.1 & strong \\ 
+  4.B & 35.6 &  0.1 & strong \\ 
+  5.A & 68.8 &  0.9 & strong \\ 
+  5.B & 24.6 &  0.1 & strong \\ 
+  6.A & $-$18.8 &  0.4 & strong \\ 
+  6.B & $-$13.8 &  0.5 & strong \\ 
+  7.A & $-$39.6 &    1 & strong \\ 
+  7.B & $-$20.6 &  0.4 & strong \\ 
+  8.A & $-$33.5 &  0.9 & moderate \\ 
+  8.B & $-$36.5 &  1.3 & strong \\ 
+  9.A & $-$59.2 &  1.8 & moderate \\ 
+  9.B & $-$65.9 &  2.2 & strong \\ 
+  10.A & \textemdash & \textemdash & none \\ 
+  10.B & \textemdash & \textemdash & none \\ 
+  11.A & \textemdash & \textemdash & none \\ 
+  11.B & \textemdash & \textemdash & none \\ 
+   \bottomrule
+\end{tabular}
+
+\captionof{table}{Reference values for the \textit{10th percentile} feature.}
+\label{tab:10th_percentile}

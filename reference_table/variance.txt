@@ -1,0 +1,35 @@
+\centering
+\small
+% latex table generated in R 4.2.1 by xtable 1.8-4 package
+% Mon Mar 13 17:23:11 2023
+\begin{tabular}{cccc}
+  \toprule
+{\textbf{filter ID}} & {\textbf{value}} & {\textbf{tol.}} & {\textbf{consensus}} \\ 
+  \midrule
+1.A & $5.33 \times 10^{4}$ & $2 \times 10^{3}$ & strong \\ 
+  1.B & $5.26 \times 10^{4}$ & $2.8 \times 10^{3}$ & very strong \\ 
+  2.A & $4.66 \times 10^{4}$ & $1.6 \times 10^{3}$ & strong \\ 
+  2.B & $4.44 \times 10^{4}$ & $2.3 \times 10^{3}$ & very strong \\ 
+  3.A &  556 &   24 & strong \\ 
+  3.B &  720 &   33 & strong \\ 
+  4.A & $1.8 \times 10^{4}$ &  500 & strong \\ 
+  4.B & $1.11 \times 10^{4}$ &  300 & strong \\ 
+  5.A & $1.04 \times 10^{3}$ &   10 & strong \\ 
+  5.B &  231 &    2 & strong \\ 
+  6.A &  427 &   11 & strong \\ 
+  6.B &  250 &    9 & strong \\ 
+  7.A & $1.91 \times 10^{3}$ &   40 & strong \\ 
+  7.B &  422 &   11 & strong \\ 
+  8.A & $1.55 \times 10^{3}$ &   50 & moderate \\ 
+  8.B & $1.81 \times 10^{3}$ &   70 & moderate \\ 
+  9.A & $4.58 \times 10^{3}$ &  170 & moderate \\ 
+  9.B & $5.49 \times 10^{3}$ &  220 & strong \\ 
+  10.A & \textemdash & \textemdash & none \\ 
+  10.B & \textemdash & \textemdash & none \\ 
+  11.A & \textemdash & \textemdash & none \\ 
+  11.B & \textemdash & \textemdash & none \\ 
+   \bottomrule
+\end{tabular}
+
+\captionof{table}{Reference values for the \textit{variance} feature.}
+\label{tab:variance}

@@ -1,0 +1,35 @@
+\centering
+\small
+% latex table generated in R 4.2.1 by xtable 1.8-4 package
+% Mon Mar 13 17:23:11 2023
+\begin{tabular}{cccc}
+  \toprule
+{\textbf{filter ID}} & {\textbf{value}} & {\textbf{tol.}} & {\textbf{consensus}} \\ 
+  \midrule
+1.A &  $-$47 &  4.6 & strong \\ 
+  1.B & $-$46.4 &  5.9 & very strong \\ 
+  2.A & $-$49.9 &  4.4 & strong \\ 
+  2.B & $-$49.9 &  5.7 & very strong \\ 
+  3.A & $-$2.44 & 0.12 & strong \\ 
+  3.B & $-$2.94 &  0.2 & strong \\ 
+  4.A &  148 &    3 & strong \\ 
+  4.B &  142 &    3 & strong \\ 
+  5.A &  103 &    1 & strong \\ 
+  5.B & 40.2 &  0.2 & strong \\ 
+  6.A & $-$0.185 & 0.025 & strong \\ 
+  6.B & $-$0.182 & 0.024 & strong \\ 
+  7.A & 0.245 & 0.03 & strong \\ 
+  7.B & $-$0.0406 & 0.0051 & strong \\ 
+  8.A & 0.248 & 0.047 & moderate \\ 
+  8.B & 0.32 & 0.059 & strong \\ 
+  9.A & 2.08 & 0.17 & moderate \\ 
+  9.B & 2.68 & 0.22 & strong \\ 
+  10.A & \textemdash & \textemdash & none \\ 
+  10.B & \textemdash & \textemdash & none \\ 
+  11.A & \textemdash & \textemdash & none \\ 
+  11.B & \textemdash & \textemdash & none \\ 
+   \bottomrule
+\end{tabular}
+
+\captionof{table}{Reference values for the \textit{mean} feature.}
+\label{tab:mean}

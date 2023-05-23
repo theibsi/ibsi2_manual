@@ -1,0 +1,35 @@
+\centering
+\small
+% latex table generated in R 4.2.1 by xtable 1.8-4 package
+% Mon Mar 13 17:23:11 2023
+\begin{tabular}{cccc}
+  \toprule
+{\textbf{filter ID}} & {\textbf{value}} & {\textbf{tol.}} & {\textbf{consensus}} \\ 
+  \midrule
+1.A & $1.38 \times 10^{3}$ &   10 & strong \\ 
+  1.B & $1.37 \times 10^{3}$ &   20 & very strong \\ 
+  2.A & $1.22 \times 10^{3}$ &   10 & strong \\ 
+  2.B & $1.22 \times 10^{3}$ &   10 & very strong \\ 
+  3.A &  369 &    2 & strong \\ 
+  3.B &  377 &    5 & strong \\ 
+  4.A &  657 &    4 & strong \\ 
+  4.B &  496 &    1 & strong \\ 
+  5.A &  322 &    5 & strong \\ 
+  5.B &  165 &    3 & strong \\ 
+  6.A &  447 &    3 & strong \\ 
+  6.B &  303 &    2 & strong \\ 
+  7.A &  701 &    9 & strong \\ 
+  7.B &  404 &    7 & strong \\ 
+  8.A &  803 &    5 & moderate \\ 
+  8.B &  785 &    6 & moderate \\ 
+  9.A & $1 \times 10^{3}$ &   10 & moderate \\ 
+  9.B & $1.08 \times 10^{3}$ &   20 & moderate \\ 
+  10.A & \textemdash & \textemdash & none \\ 
+  10.B & \textemdash & \textemdash & weak \\ 
+  11.A & \textemdash & \textemdash & none \\ 
+  11.B & \textemdash & \textemdash & none \\ 
+   \bottomrule
+\end{tabular}
+
+\captionof{table}{Reference values for the \textit{range} feature.}
+\label{tab:range}

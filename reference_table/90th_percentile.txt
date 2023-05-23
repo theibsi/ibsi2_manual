@@ -1,0 +1,35 @@
+\centering
+\small
+% latex table generated in R 4.2.1 by xtable 1.8-4 package
+% Mon Mar 13 17:23:11 2023
+\begin{tabular}{cccc}
+  \toprule
+{\textbf{filter ID}} & {\textbf{value}} & {\textbf{tol.}} & {\textbf{consensus}} \\ 
+  \midrule
+1.A &   93 &  0.1 & strong \\ 
+  1.B &   92 &  0.1 & very strong \\ 
+  2.A & 79.8 &  0.1 & strong \\ 
+  2.B & 77.2 &  0.1 & strong \\ 
+  3.A & 13.2 &  1.3 & strong \\ 
+  3.B & 17.4 &  1.9 & strong \\ 
+  4.A &  347 &    4 & strong \\ 
+  4.B &  293 &    4 & strong \\ 
+  5.A &  145 &    2 & strong \\ 
+  5.B & 59.3 &  0.3 & strong \\ 
+  6.A & 17.7 &  0.4 & strong \\ 
+  6.B & 12.1 &  0.4 & strong \\ 
+  7.A & 40.5 &  0.9 & strong \\ 
+  7.B & 20.4 &  0.4 & strong \\ 
+  8.A & 34.4 &    1 & moderate \\ 
+  8.B & 38.1 &  1.3 & strong \\ 
+  9.A & 71.5 &  1.9 & moderate \\ 
+  9.B & 82.8 &  1.8 & moderate \\ 
+  10.A & \textemdash & \textemdash & none \\ 
+  10.B & \textemdash & \textemdash & none \\ 
+  11.A & \textemdash & \textemdash & none \\ 
+  11.B & \textemdash & \textemdash & none \\ 
+   \bottomrule
+\end{tabular}
+
+\captionof{table}{Reference values for the \textit{90th percentile} feature.}
+\label{tab:90th_percentile}

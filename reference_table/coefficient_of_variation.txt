@@ -1,0 +1,35 @@
+\centering
+\small
+% latex table generated in R 4.2.1 by xtable 1.8-4 package
+% Mon Mar 13 17:23:11 2023
+\begin{tabular}{cccc}
+  \toprule
+{\textbf{filter ID}} & {\textbf{value}} & {\textbf{tol.}} & {\textbf{consensus}} \\ 
+  \midrule
+1.A & $-$4.92 & 0.42 & strong \\ 
+  1.B & $-$4.94 & 0.64 & very strong \\ 
+  2.A & $-$4.33 & 0.34 & strong \\ 
+  2.B & $-$4.22 & 0.47 & very strong \\ 
+  3.A & $-$9.66 & 1.21 & strong \\ 
+  3.B & $-$9.12 & 1.63 & strong \\ 
+  4.A & 0.904 & 0.007 & strong \\ 
+  4.B & 0.743 & 0.005 & strong \\ 
+  5.A & 0.313 & 0.003 & strong \\ 
+  5.B & 0.377 & 0.004 & strong \\ 
+  6.A & $-$112 &   37 & strong \\ 
+  6.B & $-$86.9 & 32.6 & strong \\ 
+  7.A &  178 &   77 & strong \\ 
+  7.B & $-$506 &  149 & strong \\ 
+  8.A &  159 &   30 & moderate \\ 
+  8.B &  134 &   27 & strong \\ 
+  9.A & 32.6 & 24.4 & moderate \\ 
+  9.B & 27.7 & 20.4 & strong \\ 
+  10.A & \textemdash & \textemdash & none \\ 
+  10.B & \textemdash & \textemdash & none \\ 
+  11.A & \textemdash & \textemdash & none \\ 
+  11.B & \textemdash & \textemdash & none \\ 
+   \bottomrule
+\end{tabular}
+
+\captionof{table}{Reference values for the \textit{coefficient of variation} feature.}
+\label{tab:coefficient_of_variation}

@@ -1,0 +1,35 @@
+\centering
+\small
+% latex table generated in R 4.2.1 by xtable 1.8-4 package
+% Mon Mar 13 17:23:11 2023
+\begin{tabular}{cccc}
+  \toprule
+{\textbf{filter ID}} & {\textbf{value}} & {\textbf{tol.}} & {\textbf{consensus}} \\ 
+  \midrule
+1.A & $-$2.17 & 0.07 & strong \\ 
+  1.B & $-$2.18 & 0.09 & very strong \\ 
+  2.A & $-$2.13 & 0.07 & strong \\ 
+  2.B & $-$2.13 & 0.09 & very strong \\ 
+  3.A & 0.295 & 0.027 & strong \\ 
+  3.B & 0.428 & 0.009 & strong \\ 
+  4.A & 0.877 & 0.024 & strong \\ 
+  4.B & 0.645 & 0.028 & strong \\ 
+  5.A & 1.31 & 0.03 & strong \\ 
+  5.B & 1.57 & 0.03 & strong \\ 
+  6.A & 0.0837 & 0.0188 & strong \\ 
+  6.B & 0.157 & 0.018 & strong \\ 
+  7.A & 0.0469 & 0.0072 & strong \\ 
+  7.B & $-$0.0112 & 0.0027 & strong \\ 
+  8.A & $-$0.0473 & 0.0145 & moderate \\ 
+  8.B & $-$0.0719 & 0.0163 & moderate \\ 
+  9.A & $-$0.0596 & 0.0145 & moderate \\ 
+  9.B & $-$0.0858 & 0.0107 & moderate \\ 
+  10.A & \textemdash & \textemdash & none \\ 
+  10.B & \textemdash & \textemdash & none \\ 
+  11.A & \textemdash & \textemdash & none \\ 
+  11.B & \textemdash & \textemdash & none \\ 
+   \bottomrule
+\end{tabular}
+
+\captionof{table}{Reference values for the \textit{skewness} feature.}
+\label{tab:skewness}

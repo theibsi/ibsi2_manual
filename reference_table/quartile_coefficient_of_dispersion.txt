@@ -1,0 +1,35 @@
+\centering
+\small
+% latex table generated in R 4.2.1 by xtable 1.8-4 package
+% Mon Mar 13 17:23:11 2023
+\begin{tabular}{cccc}
+  \toprule
+{\textbf{filter ID}} & {\textbf{value}} & {\textbf{tol.}} & {\textbf{consensus}} \\ 
+  \midrule
+1.A &    1 & 0.85 & strong \\ 
+  1.B & 0.944 & 0.925 & very strong \\ 
+  2.A & 1.85 & 0.66 & strong \\ 
+  2.B & 2.97 & 0.58 & very strong \\ 
+  3.A & $-$2.93 & 0.06 & strong \\ 
+  3.B & $-$2.34 & 0.07 & strong \\ 
+  4.A & 0.773 & 0.003 & strong \\ 
+  4.B & 0.699 & 0.003 & strong \\ 
+  5.A & 0.187 & 0.001 & strong \\ 
+  5.B & 0.226 & 0.002 & strong \\ 
+  6.A &  491 &   10 & strong \\ 
+  6.B & $-$162 &   27 & strong \\ 
+  7.A &  104 &   66 & strong \\ 
+  7.B & $-$684 &  130 & strong \\ 
+  8.A & $-$441 &   29 & moderate \\ 
+  8.B & \textemdash & \textemdash & none \\ 
+  9.A &   47 & 15.2 & moderate \\ 
+  9.B & 47.4 & 20.7 & strong \\ 
+  10.A & \textemdash & \textemdash & none \\ 
+  10.B & \textemdash & \textemdash & none \\ 
+  11.A & \textemdash & \textemdash & none \\ 
+  11.B & \textemdash & \textemdash & none \\ 
+   \bottomrule
+\end{tabular}
+
+\captionof{table}{Reference values for the \textit{quartile coefficient of dispersion} feature.}
+\label{tab:quartile_coefficient_of_dispersion}
