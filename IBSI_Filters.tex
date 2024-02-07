@@ -202,7 +202,10 @@ $^{*}$These authors contributed equally to this work\\
 \chapter*{The image biomarker standardisation initiative}
 The Image Biomarker Standardisation Initiative (IBSI) is an independent international collaboration that works towards standardising the extraction of image biomarkers from acquired imaging for the purpose of high-throughput quantitative image analysis (radiomics). Lack of reproducibility and validation of radiomic studies is considered to be a major challenge for the field. Part of this challenge lies in the scantiness of consensus-based guidelines and definitions for the process of translating acquired imaging into high-throughput image biomarkers. The IBSI therefore seeks to provide standardised image biomarker nomenclature and definitions, a standardised general image processing workflow, tools for verifying radiomics software implementations and reporting guidelines for radiomic studies.
 
-Additional information can be found on the official IBSI website\footnote{\texttt{\url{https://theibsi.github.io/}}, as of June 2020.}.
+Additional information can be found on the official IBSI website\footnote{\texttt{\url{https://theibsi.github.io/}}, as of February 2024.}.
+
+\subsubsection*{Related work}
+Results related to this reference manual are presented in Whybra and Zwanenburg \emph{et al.} \cite{Whybra2024-yb}.
 
 \subsubsection*{Permanent identifiers}
 The IBSI uses permanent identifiers for image biomarker definitions and important related concepts such as image processing. These consist of four-character codes and may be used for reference. Please do not use page numbers or section numbers as references, as these are subject to change.
@@ -210,9 +213,15 @@ The IBSI uses permanent identifiers for image biomarker definitions and importan
 \subsubsection*{Copyright}
 This work is licensed under the Creative Commons Attribution 4.0 International License (CC-BY).
 
-Copyright information regarding the benchmark data sets may be found on GitHub\footnote{\texttt{\url{https://github.com/theibsi/data\_sets}}, as of June 2020.}.
+Copyright information regarding the benchmark data sets may be found on GitHub\footnote{\texttt{\url{https://github.com/theibsi/data\_sets}}, as of February 2024.}.
 
 \subsection*{Change notes}
+
+\noindent Changes in version 9:
+\begin{itemize}
+    \item Added link to repository with reference consensus response maps.
+    \item Added link to related publication in Radiology \cite{Whybra2024-yb}.
+\end{itemize}
 
 \noindent Changes in version 8:
 \begin{itemize}
@@ -2702,14 +2711,6 @@ image filters & & \\
 
 Features will be computed based on the response maps of each of the filters applied to the CT image. That is, in contrast to the previous section where the objective is to arrive at a standard filter implementation, here we aim to define reference values for radiomics features. The features that are being assessed are listed below in Section~\ref{sec:radiomicsfeaturesbenchmarking}.
 
-%Consensus on reference values will be assessed in the same manner as previously~\cite{Zwanenburg2020-jt}. In short, for each team, the most recent values for each feature will be collected. This value is then limited to three significant digits. The mode of the values across software implementations is then used as a tentative reference value. The level of consensus on the validity of each reference value is then quantified, by: (I) counting the number of teams that submitted a value matching the tentative reference value with a tolerance margin (to be determined); and (II) assessing the proportion of matching teams.
-
-%Then, we will assign four consensus levels on the first measure: \textit{weak}: less than three; \textit{moderate}: three to five; \textit{strong}: six to nine; \textit{very strong}: ten or more.
-
-%The second measure is used to assess the stability of the consensus. A tentative reference value will be considered valid if and only if at least moderate consensus can be reached by an absolute majority (\(>50\%\)) of teams that contribute the value.
-
-%The compliance check list developed previously~\cite{Zwanenburg2020-jt} will be used to check whether image processing (aside from filtering) is correctly performed.
-%
 \subsection{Features}\label{sec:radiomicsfeaturesbenchmarking}
 %
 Only part of the radiomics features standardised previously need to be reported. This is done for two reasons. First, to facilitate the submission process. And secondly to ensure that sufficient statistical power can be reached as we found that the majority of teams did not implement all features previously~\cite{Zwanenburg2020-jt}.
@@ -2847,13 +2848,17 @@ image filters & & \\
 
 \chapter{Reference values}\label{sec:reference_values}
 
-\section{Consensus response maps}
+\section{Reference response maps}
 
-Consensus response maps for phase 1 can be downloaded from: \textbf{INSERT LINK}. Note that no consensus could be found for filter configurations 9 and 10.
+Reference consensus response maps for phase 1 can be downloaded from: \url{https://github.com/theibsi/ibsi_2_reference_data}. Note that no consensus could be found for filter configurations 9 and 10.
+
+To test compliance with the reference standard, a response map should be computed using the parameters listed in Table \ref{tab:benchmark_filter_settings}. Then the voxel-wise differences between the reference response map and the computed response map should be determined. The difference for each voxel should be equal to or less than 1\% of the intensity range of the reference response map.
 
 \section{Reference feature values}
 
-In phase 2, we computed features from response maps created after convolutional filtering. Shown below are their corresponding reference values.
+In phase 2, we computed features from response maps created after convolutional filtering. Shown below are their corresponding reference values. These values can also be downloaded in tabular form from: \url{https://github.com/theibsi/ibsi_2_reference_data}.
+
+To test compliance with the reference standard, a response map should be computed using the parameters listed in Tables \ref{tab:lung_ct_image_processing_configurations} and \ref{tab:lung_ct_image_filter_configurations}. Statistical features are then computed from the gross tumour volume (GTV) mask. The computed values are expected to lie within the tolerances indicated in the tables below.
 
 \subsection{Mean intensity}
 
